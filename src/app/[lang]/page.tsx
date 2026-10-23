@@ -24,10 +24,10 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
       <Services t={t} />
       <CycleScene t={t} />
       <Figures t={t} />
-      <Case t={t} />
-      <Founder t={t} />
+      <Case locale={lang} t={t} />
+      <Founder locale={lang} t={t} />
       <Faq t={t} />
-      <Contact t={t} />
+      <Contact locale={lang} t={t} />
     </>
   );
 }

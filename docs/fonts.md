@@ -3,6 +3,10 @@
 Tot el que el web diu de Gestgroup surt d'aquestes fonts, consultades el 23-10-2026. El que no hi és,
 o no quadra, és a «Pendent de confirmar».
 
+Còpia de totes les pàgines (HTML) i de les imatges a `_source/pages` i `_source/img` (no es puja).
+Pàgines: portada, quienes-somos, gestcost, gestinnova, gesthelp, blog, el cas MDM, la secció
+«Comunicaciones» del blog, contactar i nota-legal. No tenen `sitemap.xml`.
+
 ## gestgroup.es (la web actual)
 
 - **Portada** (`/`): «consultoría informática que piensa en el ahorro», anàlisi gratuïta de factures,
@@ -19,7 +23,15 @@ o no quadra, és a «Pendent de confirmar».
 - **Blog** (`/es/blog/instalacion-de-800-mdm-microsoft-intune-en-dispositivos-samsung-3`, 16-05-2025):
   el cas real de 800 MDM amb Microsoft Intune, Portal d'Empresa i Samsung Knox; −95% d'incidències,
   compliment total de les polítiques de ciberseguretat.
-- **Contacte**: Carrer del Mestre Francesc Civil, 8, baixos, 17005 Girona · 931 156 344.
+- **Contacte**: Carrer del Mestre Francesc Civil, 8, baixos, 17005 Girona · 931 156 344 ·
+  gestgroup@gestgroup.es (el correu surt al final del cas MDM).
+- **Compañía** (`/quienes-somos.php`): també la foto de l'Albert (`img/ceo-gestgroup.jpg`, real, a
+  `public/images/albert-giro.webp`), el seu LinkedIn, la història Gestcost → Gestgroup → visió de futur,
+  els pilars LeanIT / Innovation / Help i la cita de Larry Ellison.
+- **Nota legal** (`/nota-legal.php`): GESTGROUP IT SERVICES S.L., NIF B56762339, C/ Manuel Cazurro
+  Ruiz, 3 - 3º 2ª, 17003 Girona, albert.giro@gestgroup.es. La política de privacitat i la de galetes del
+  web nou en són còpia literal (`src/data/legal.ts`).
+- La resta de fotos de la seva web són de banc d'imatges: no les fem servir.
 - Logotip (`/assets/images/logo.png`, `/fav-icon/icon.png`) i logos de clients
   (`/assets/images/logos/*.png`), descarregats a `_source/` (no es puja).
 
@@ -38,6 +50,12 @@ o no quadra, és a «Pendent de confirmar».
   i al web hi diu. L'única xifra de Gestgroup és el 30% d'estalvi mitjà.
 
 ## Pendent de confirmar amb Gestgroup
+
+- **Avís legal**: la seva web no en té. El del web nou el redacta Nertel amb les seves dades; l'han de
+  revisar (i hi falten les dades del Registre Mercantil).
+- **Política de galetes**: és la de la seva web, i les taules descriuen les galetes de la web vella
+  (`rgpdModel`, `PHPSESSID`, Google Analytics), que el web nou no fa servir. Mentre sigui demo, les
+  úniques galetes són les del kit (enllaç personal i PostHog). Cal refer les taules quan es publiqui.
 
 - **Nombre de clients**: la portada diu «+100», «Compañía» i «Gestor Global» diuen «+500». No el posem.
 - **Estalvi**: «33%» a la portada, «+30%» i «30%» a la resta. Fem servir 30%.

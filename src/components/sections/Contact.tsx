@@ -1,8 +1,9 @@
 import { site } from "@/data/site";
+import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { ContactForm } from "./ContactForm";
 
-export function Contact({ t }: { t: Dictionary }) {
+export function Contact({ locale, t }: { locale: Locale; t: Dictionary }) {
   return (
     <section id="contacto" aria-labelledby="contacto-title" className="relative overflow-hidden py-24 md:py-36">
       <div aria-hidden className="absolute inset-x-0 top-0 h-[70%] bg-[image:radial-gradient(ellipse_at_top,rgba(77,70,192,0.35),transparent_65%)]" />
@@ -36,7 +37,7 @@ export function Contact({ t }: { t: Dictionary }) {
           </dl>
         </div>
         <div className="reveal">
-          <ContactForm t={t} />
+          <ContactForm locale={locale} t={t} />
         </div>
       </div>
     </section>

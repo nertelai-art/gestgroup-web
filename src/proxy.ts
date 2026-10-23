@@ -19,7 +19,8 @@ export async function proxy(request: NextRequest, event: NextFetchEvent) {
   return response;
 }
 
-// Literal: Next el llegeix sense executar el fitxer. És el `demoMatcher` del kit.
+// Literal: Next el llegeix sense executar el fitxer. És el `demoMatcher` del kit, més `images/`:
+// l'optimitzador de Next demana les fotos des del servidor, sense galetes, i la porta li tornaria 403.
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon\\.ico|icon\\.svg|apple-icon|robots\\.txt|opengraph-image|twitter-image).*)"],
+  matcher: ["/((?!_next/static|_next/image|images/|favicon\\.ico|icon\\.svg|apple-icon|robots\\.txt|opengraph-image|twitter-image).*)"],
 };

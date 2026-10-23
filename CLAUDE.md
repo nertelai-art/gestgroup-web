@@ -29,19 +29,30 @@ Les regles de casa (`~/.claude/CLAUDE.md`) valen aquí. Això és el que és pro
 
 ## Escenes
 
-- Tres escenes guiades pel scroll, sense three.js: la primera pantalla (l'anell gira i creix), la
-  factura (`InvoiceScene`) i el cicle Kaizen (`CycleScene`). La coreografia va en fitxers
-  `*-phases.ts` de TypeScript pur, amb proves.
+- Tres escenes guiades pel scroll, sense three.js: la primera pantalla (pila de factures en 3D CSS que
+  l'auditor marca, s'ordena i rep el segell «Bajo control»), la factura (`InvoiceScene`) i el dial del
+  mètode (`CycleScene`). La coreografia va en fitxers `*-phases.ts` de TypeScript pur, amb proves.
+- La primera pantalla porta a l'HTML la pila desordenada (el que es veu en arribar), no l'estat final:
+  és l'única excepció. Amb moviment reduït es pinta ordenada i segellada.
+- Res de xips de xifres flotants ni del logotip girant: l'usuari els va trobar «molt d'IA» (23-10-2026).
 - Progrés en refs i DOM tocat directament des del scroll (`useScrollProgress`); mai `setState` per
   fotograma. S'actualitza a l'esdeveniment, sense rAF: en un panell de navegador amagat el rAF no corre.
 - Cada escena té l'estat final a l'HTML i respecta `prefers-reduced-motion`.
 - Direcció visual i logotip: `docs/direccio-visual.md`. El logotip és redibuixat i provisional.
 
+## Pàgines
+
+- `/[lang]` portada, `/[lang]/empresa` (Compañía), `/[lang]/casos/mdm-intune-samsung` (el cas del seu
+  blog), `/[lang]/aviso-legal`, `/[lang]/privacidad` i `/[lang]/cookies`. Les legals són en castellà en
+  tots dos idiomes (`lang="es"`), com a la seva web.
+- `public/images/` queda fora de la porta de la demo (`src/proxy.ts`): l'optimitzador d'imatges de Next
+  les demana sense galetes. Només hi ha d'anar el que ja és públic.
+
 ## Pendent
 
 - **El formulari no s'envia enlloc**: `/api/contact` valida i respon `delivered: false`. Cal decidir
   amb Gestgroup on han d'arribar les sol·licituds (correu o CRM) abans de publicar-lo de debò.
-- Avís legal, privacitat i galetes: falta la raó social correcta (vegeu `docs/fonts.md`).
+- Avís legal redactat per nosaltres i taules de galetes de la web vella: vegeu `docs/fonts.md`.
 - `og:image` pròpia.
 
 ## Demo per a leads (`src/demo-kit`)

@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useRef, useState } from "react";
+import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { interestIds, validateContact, type ContactErrors, type ContactField, type ContactInput, type InterestId } from "@/lib/contact";
 
@@ -8,7 +10,7 @@ type Status = { kind: "idle" } | { kind: "sending" } | { kind: "sent"; name: str
 
 const fieldOrder: ContactField[] = ["name", "company", "email", "phone", "privacy"];
 
-export function ContactForm({ t }: { t: Dictionary }) {
+export function ContactForm({ locale, t }: { locale: Locale; t: Dictionary }) {
   const f = t.contact.form;
   const form = useRef<HTMLFormElement>(null);
   const [errors, setErrors] = useState<ContactErrors>({});
@@ -147,7 +149,12 @@ export function ContactForm({ t }: { t: Dictionary }) {
             aria-describedby={errors.privacy ? "privacy-error" : undefined}
             onChange={() => revalidate("privacy")}
           />
-          {f.privacy}
+          <span>
+            {f.privacy}{" "}
+            <Link href={`/${locale}/privacidad`} target="_blank" className="font-semibold text-sky-light underline underline-offset-4">
+              {f.privacyLink}
+            </Link>
+          </span>
         </label>
         {errors.privacy ? (
           <p id="privacy-error" className="mt-2 text-sm font-semibold text-pink-light">

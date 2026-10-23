@@ -10,7 +10,22 @@ export const site = {
   region: "Girona",
   country: "ES",
   mapsHref: "https://www.google.com/maps/search/?api=1&query=Carrer+del+Mestre+Francesc+Civil+8+17005+Girona",
+  /** Correu de contacte que dona el seu cas d'èxit del blog. */
+  email: "gestgroup@gestgroup.es",
   linkedin: "https://es.linkedin.com/company/gestgroup",
+  ceo: {
+    name: "Albert Giró",
+    fullName: "Albert Giró i Bartra",
+    linkedin: "https://www.linkedin.com/in/albert-gir%C3%B3-i-bartra-3324b426/",
+    photo: "/images/albert-giro.webp",
+  },
+  /** Dades del titular, exactes de la seva «Nota legal» (nota-legal.php). */
+  legal: {
+    name: "GESTGROUP IT SERVICES S.L.",
+    nif: "B56762339",
+    address: "C/ Manuel Cazurro Ruiz, 3 - 3º 2ª | 17003 Girona",
+    email: "albert.giro@gestgroup.es",
+  },
   /** Fix i no del rellotge: el web és estàtic i ha de sortir igual a cada build. */
   copyrightYear: 2026,
   /** Adreça pública del web nou. Es canvia quan passi al domini del client. */

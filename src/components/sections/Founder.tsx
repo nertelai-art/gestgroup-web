@@ -1,7 +1,11 @@
+import Image from "next/image";
+import Link from "next/link";
+import { site } from "@/data/site";
+import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { GMark } from "../layout/Logo";
 
-export function Founder({ t }: { t: Dictionary }) {
+export function Founder({ locale, t }: { locale: Locale; t: Dictionary }) {
   return (
     <section id="filosofia" aria-labelledby="filosofia-title" className="band relative overflow-hidden py-24 md:py-36">
       <GMark className="pointer-events-none absolute -right-24 -top-24 size-[28rem] opacity-[0.07] md:size-[40rem]" />
@@ -17,8 +21,8 @@ export function Founder({ t }: { t: Dictionary }) {
             {t.founder.quote}
           </blockquote>
           <figcaption className="reveal mt-10 flex items-center gap-4">
-            <span className="grid size-14 place-items-center rounded-full bg-[image:var(--brand-gradient)] font-[family-name:var(--font-display)] text-lg font-extrabold text-white" aria-hidden>
-              AG
+            <span className="relative size-16 shrink-0 overflow-hidden rounded-full bg-white p-0.5 ring-2 ring-magenta/60">
+              <Image src={site.ceo.photo} alt="" width={64} height={64} className="size-full rounded-full object-cover object-[50%_18%]" />
             </span>
             <span>
               <span className="display block text-lg">{t.founder.name}</span>
@@ -26,6 +30,9 @@ export function Founder({ t }: { t: Dictionary }) {
             </span>
           </figcaption>
           <p className="reveal mt-10 max-w-2xl border-l-2 border-magenta pl-5 text-[var(--band-ink-soft)]">{t.founder.text}</p>
+          <Link href={`/${locale}/empresa`} className="reveal mt-6 inline-flex items-center gap-2 font-bold text-ocean hover:underline dark:text-sky-light">
+            {t.founder.more} <span aria-hidden>→</span>
+          </Link>
         </figure>
       </div>
     </section>

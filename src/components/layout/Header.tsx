@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { locales, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
@@ -28,11 +29,13 @@ export function Header({ locale, t }: { locale: Locale; t: Dictionary }) {
     };
   }, [open]);
 
+  // Amb l'idioma davant: així també funcionen des de les pàgines que no són la portada.
   const links = [
-    { href: "#servicios", label: t.nav.services },
-    { href: "#metodo", label: t.nav.method },
-    { href: "#caso", label: t.nav.case },
-    { href: "#preguntas", label: t.nav.faq },
+    { href: `/${locale}#servicios`, label: t.nav.services },
+    { href: `/${locale}#metodo`, label: t.nav.method },
+    { href: `/${locale}/empresa`, label: t.nav.company },
+    { href: `/${locale}#caso`, label: t.nav.case },
+    { href: `/${locale}#preguntas`, label: t.nav.faq },
   ];
 
   return (
@@ -46,19 +49,19 @@ export function Header({ locale, t }: { locale: Locale; t: Dictionary }) {
           <Logo />
         </Link>
 
-        <nav aria-label={t.nav.label} className="hidden items-center gap-8 lg:flex">
+        <nav aria-label={t.nav.label} className="hidden items-center gap-7 lg:flex">
           {links.map((link) => (
-            <a key={link.href} href={link.href} className="text-sm font-semibold text-slate transition-colors hover:text-snow">
+            <Link key={link.href} href={link.href} className="text-sm font-semibold text-slate transition-colors hover:text-snow">
               {link.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
         <div className="flex items-center gap-3">
           <LanguageSwitch locale={locale} label={t.nav.language} className="hidden sm:flex" />
-          <a href="#contacto" className="btn btn-primary hidden min-h-10 px-5 py-2 text-sm sm:inline-flex">
+          <Link href={`/${locale}#contacto`} className="btn btn-primary hidden min-h-10 px-5 py-2 text-sm sm:inline-flex">
             {t.nav.cta}
-          </a>
+          </Link>
           <button
             type="button"
             className="grid size-11 place-items-center rounded-full border border-line lg:hidden"
@@ -78,15 +81,15 @@ export function Header({ locale, t }: { locale: Locale; t: Dictionary }) {
       <div id="menu-mobil" hidden={!open} className="container-x h-[calc(100dvh-var(--header-h))] pb-10 pt-6 lg:hidden">
         <nav aria-label={t.nav.label} className="flex flex-col gap-2">
           {links.map((link) => (
-            <a key={link.href} href={link.href} onClick={() => setOpen(false)} className="display border-b border-line py-4 text-3xl">
+            <Link key={link.href} href={link.href} onClick={() => setOpen(false)} className="display border-b border-line py-4 text-3xl">
               {link.label}
-            </a>
+            </Link>
           ))}
         </nav>
         <div className="mt-8 flex flex-wrap items-center gap-4">
-          <a href="#contacto" onClick={() => setOpen(false)} className="btn btn-primary">
+          <Link href={`/${locale}#contacto`} onClick={() => setOpen(false)} className="btn btn-primary">
             {t.nav.cta}
-          </a>
+          </Link>
           <LanguageSwitch locale={locale} label={t.nav.language} className="flex" />
         </div>
       </div>
@@ -95,12 +98,14 @@ export function Header({ locale, t }: { locale: Locale; t: Dictionary }) {
 }
 
 function LanguageSwitch({ locale, label, className }: { locale: Locale; label: string; className?: string }) {
+  // Canvia només l'idioma i es queda a la mateixa pàgina (/es/empresa → /ca/empresa).
+  const rest = usePathname().split("/").slice(2).join("/");
   return (
     <nav aria-label={label} className={`items-center gap-1 rounded-full border border-line p-1 text-xs font-bold uppercase ${className ?? ""}`}>
       {locales.map((code) => (
         <Link
           key={code}
-          href={`/${code}`}
+          href={rest ? `/${code}/${rest}` : `/${code}`}
           hrefLang={code}
           lang={code}
           aria-current={code === locale ? "true" : undefined}

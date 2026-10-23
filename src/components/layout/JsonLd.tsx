@@ -12,6 +12,10 @@ export function JsonLd({ locale, t }: { locale: Locale; t: Dictionary }) {
       description: t.meta.description,
       url: `${site.url}/${locale}`,
       telephone: "+34 931 156 344",
+      email: site.email,
+      legalName: site.legal.name,
+      taxID: site.legal.nif,
+      founder: { "@type": "Person", name: site.ceo.fullName, jobTitle: "CEO", sameAs: [site.ceo.linkedin] },
       logo: `${site.url}/icon.svg`,
       address: {
         "@type": "PostalAddress",

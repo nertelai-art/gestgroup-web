@@ -6,7 +6,7 @@ import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { GMark } from "../layout/Logo";
 import { useReducedMotion, useScrollProgress } from "../scroll/scroll";
-import { invoiceState, stepStarts } from "./invoice-phases";
+import { invoiceState } from "./invoice-phases";
 
 const intlLocale: Record<Locale, string> = { es: "es-ES", ca: "ca-ES" };
 
@@ -95,9 +95,6 @@ export function InvoiceScene({ locale, t }: { locale: Locale; t: Dictionary }) {
             <div ref={bar} className="mt-6 hidden h-1 overflow-hidden rounded-full bg-line md:block" style={{ "--p": 1 } as React.CSSProperties}>
               <div className="h-full origin-left rounded-full bg-[image:var(--brand-gradient)]" style={{ transform: "scaleX(var(--p))" }} />
             </div>
-            <p className="sr-only">
-              {stepStarts.length} / {t.invoice.steps.map((s) => s.title).join(", ")}
-            </p>
           </div>
 
           {/* La factura. */}

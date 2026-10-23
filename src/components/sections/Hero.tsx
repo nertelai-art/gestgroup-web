@@ -1,80 +1,67 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { site } from "@/data/site";
 import type { Dictionary } from "@/i18n/dictionaries";
-import { GMark } from "../layout/Logo";
-import { useScrollProgress } from "../scroll/scroll";
+import { useReducedMotion, useScrollProgress } from "../scroll/scroll";
+import { chaos, heroState, SHEETS } from "./hero-phases";
 import { Words } from "./Words";
 
 /**
- * Primera pantalla. La secció és més alta que la pantalla i el contingut hi queda enganxat: mentre es
- * baixa, l'anell del logotip gira i creix, les xifres s'escampen i el text puja i s'esvaeix.
- * Tot es fa amb variables CSS escrites des del scroll; l'estat inicial és el de l'HTML.
+ * Primera pantalla: una pila desordenada de factures de paper, una per cada àrea que Gestgroup revisa.
+ * En baixar, l'auditor hi marca en magenta el que sobra, les factures s'ordenen en una sola pila i hi
+ * cau el segell «Bajo control». L'HTML porta la pila desordenada (el que es veu en arribar); amb
+ * moviment reduït es pinta directament ordenada i segellada.
  */
 export function Hero({ t }: { t: Dictionary }) {
+  const reduced = useReducedMotion();
   const section = useRef<HTMLElement>(null);
-  useScrollProgress(section, (p) => section.current?.style.setProperty("--p", p.toFixed(4)));
+  const stage = useRef<HTMLDivElement>(null);
+  const sheets = useRef<(HTMLDivElement | null)[]>([]);
+  const copy = useRef<HTMLDivElement>(null);
   const startWords = t.hero.titleStart.split(" ").length;
   const highlightWords = t.hero.titleHighlight.split(" ").length;
 
+  const parts = { sheets, stage, copy };
+  useScrollProgress(section, (progress) => paint(parts, reduced ? 1 : progress));
+  // Si el moviment reduït es coneix després de la primera pintada, es posa l'estat final sense esperar el scroll.
+  useEffect(() => {
+    if (reduced) paint({ sheets, stage, copy }, 1);
+  }, [reduced]);
+
+  // Inclinació suau de tota la pila amb el ratolí (només amb punter fi i si es permet moviment).
+  useEffect(() => {
+    if (reduced || !window.matchMedia("(pointer: fine)").matches) return;
+    const element = stage.current;
+    if (!element) return;
+    const move = (event: PointerEvent) => {
+      const x = event.clientX / window.innerWidth - 0.5;
+      const y = event.clientY / window.innerHeight - 0.5;
+      element.style.setProperty("--tilt-x", `${(-y * 8).toFixed(2)}deg`);
+      element.style.setProperty("--tilt-y", `${(x * 10).toFixed(2)}deg`);
+    };
+    window.addEventListener("pointermove", move, { passive: true });
+    return () => window.removeEventListener("pointermove", move);
+  }, [reduced]);
+
   return (
-    <section ref={section} id="top" className="relative h-[150svh]" style={{ "--p": 0 } as React.CSSProperties}>
-      <div className="sticky top-0 flex h-svh min-h-[40rem] items-center overflow-hidden">
-        {/* Fons: resplendor del degradat del logotip i quadrícula fina, com un full de càlcul. */}
-        <div aria-hidden className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 opacity-[0.35] [background-image:linear-gradient(var(--color-line)_1px,transparent_1px),linear-gradient(90deg,var(--color-line)_1px,transparent_1px)] [background-size:64px_64px] [mask-image:radial-gradient(ellipse_at_70%_45%,#000_10%,transparent_70%)]" />
-          <div className="absolute right-[-20vmin] top-1/2 size-[110vmin] -translate-y-1/2 rounded-full bg-[image:var(--brand-conic)] opacity-25 blur-[120px]" />
-        </div>
+    <section ref={section} id="inicio" aria-labelledby="hero-title" className="relative h-[200svh]">
+      <div className="sticky top-0 flex h-svh min-h-[36rem] items-center overflow-hidden">
+        {/* Una sola llum suau damunt de la pila: res de taques de colors. */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_55%_60%_at_72%_55%,rgba(255,255,255,0.07),transparent_70%)] max-md:bg-[radial-gradient(ellipse_90%_45%_at_50%_75%,rgba(255,255,255,0.07),transparent_70%)]" />
 
-        {/* L'anell. Gira sol a poc a poc i, a més, amb el scroll. */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute right-[-10vmin] top-1/2 size-[min(74vmin,50rem)] max-md:right-[-30vw] max-md:top-[24%] max-md:size-[85vw] max-md:opacity-40"
-          style={{
-            transform: "translateY(calc(-50% + var(--p) * -12vh)) rotate(calc(var(--p) * 160deg)) scale(calc(1 + var(--p) * 0.35))",
-          }}
-        >
-          <div className="size-full animate-[ring-idle_80s_linear_infinite]">
-            <GMark className="size-full drop-shadow-[0_40px_80px_rgba(77,70,192,0.45)]" />
-          </div>
-        </div>
-
-        {/* Xifres que suren al voltant de l'anell i s'escampen en baixar. */}
-        <FloatChip className="right-[min(50vmin,34rem)] top-[24%]" dx={-60} dy={-80} delay="0s">
-          <span className="gradient-text display text-3xl">−30%</span>
-          <span className="text-xs text-slate">{t.hero.proof[1]}</span>
-        </FloatChip>
-        <FloatChip className="right-[4vmin] top-[70%]" dx={80} dy={60} delay="-2s">
-          <span className="display text-3xl text-sky-light">24/7</span>
-          <span className="text-xs text-slate">365</span>
-        </FloatChip>
-        <FloatChip className="right-[min(46vmin,31rem)] top-[66%]" dx={-90} dy={90} delay="-4s">
-          <span className="display text-3xl text-pink-light">+25</span>
-          <span className="text-xs text-slate">{t.hero.proof[0]?.replace("+25 ", "")}</span>
-        </FloatChip>
-
-        <div
-          className="container-x relative"
-          style={{ transform: "translateY(calc(var(--p) * -14vh))", opacity: "calc(1 - var(--p) * 1.4)" }}
-        >
-          <div className="max-w-[46rem] pt-[var(--header-h)]">
-            <p className="eyebrow reveal flex items-center gap-3 text-sky-light">
-              <span className="relative flex size-2">
-                <span className="absolute inset-0 animate-[pulse-dot_2s_ease-out_infinite] rounded-full bg-cyan" />
-                <span className="relative size-2 rounded-full bg-cyan" />
-              </span>
-              {t.hero.eyebrow}
-            </p>
-            <h1 className="display reveal-words mt-6 text-[clamp(2.75rem,8vw,6.25rem)]">
+        <div className="container-x relative grid h-full grid-rows-[auto_minmax(0,1fr)] gap-2 pb-4 pt-[calc(var(--header-h)+1.5rem)] md:grid-rows-1 md:items-center md:gap-10 md:pb-0 md:pt-[var(--header-h)] md:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
+          <div ref={copy}>
+            <p className="eyebrow reveal text-sky-light">{t.hero.eyebrow}</p>
+            <h1 id="hero-title" className="display reveal-words mt-5 text-[clamp(2.5rem,7vw,5.75rem)]">
               <Words text={t.hero.titleStart} />
               <Words text={t.hero.titleHighlight} offset={startWords} className="gradient-text pb-[0.08em]" />
               <Words text={t.hero.titleEnd} offset={startWords + highlightWords} />
             </h1>
-            <p className="reveal mt-7 max-w-[36rem] text-lg text-slate md:text-xl" style={{ "--i": 3 } as React.CSSProperties}>
+            <p className="reveal mt-6 max-w-[34rem] text-lg text-slate md:text-xl" style={{ "--i": 3 } as React.CSSProperties}>
               {t.hero.lead}
             </p>
-            <div className="reveal mt-9 flex flex-wrap items-center gap-3" style={{ "--i": 4 } as React.CSSProperties}>
+            <div className="reveal mt-8 flex flex-wrap items-center gap-3" style={{ "--i": 4 } as React.CSSProperties}>
               <a href="#contacto" className="btn btn-primary">
                 {t.hero.cta} <span className="arrow" aria-hidden>→</span>
               </a>
@@ -82,59 +69,131 @@ export function Hero({ t }: { t: Dictionary }) {
                 {t.hero.call} · <span className="num">{site.phone}</span>
               </a>
             </div>
-            <ul className="reveal mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate" style={{ "--i": 5 } as React.CSSProperties}>
-              {t.hero.proof.map((item) => (
-                <li key={item} className="flex items-center gap-2">
-                  <svg viewBox="0 0 16 16" className="size-4 text-cyan" aria-hidden>
-                    <path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                  {item}
-                </li>
-              ))}
-            </ul>
+          </div>
+
+          {/* La pila de factures. */}
+          <div
+            ref={stage}
+            role="img"
+            aria-label={t.hero.pileLabel}
+            className="hero-stage relative h-full max-h-[44rem] min-h-[14rem]"
+            style={{ "--stamp": reduced ? 1 : 0 } as React.CSSProperties}
+          >
+            <div aria-hidden className="hero-tilt absolute inset-0">
+              {t.hero.sheets.map((sheet, i) => {
+                const pose = chaos[i]!;
+                return (
+                  <div key={sheet.label} className="hero-drop absolute left-1/2 top-1/2" style={{ "--i": i } as React.CSSProperties}>
+                    <div
+                      ref={(el) => {
+                        sheets.current[i] = el;
+                      }}
+                      className="hero-sheet"
+                      style={
+                        {
+                          "--x": pose.x,
+                          "--y": pose.y,
+                          "--z": pose.z,
+                          "--rx": `${pose.rx}deg`,
+                          "--ry": `${pose.ry}deg`,
+                          "--rz": `${pose.rz}deg`,
+                          "--mark": 0,
+                        } as React.CSSProperties
+                      }
+                    >
+                      <Sheet label={sheet.label} finding={sheet.finding} invoice={t.hero.invoice} total={t.hero.total} seed={i} />
+                      {i === SHEETS - 1 ? <Stamp text={t.hero.stamp} /> : null}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
-
-        <a
-          href="#clientes"
-          className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-xs text-slate md:flex [@media(max-height:820px)]:!hidden"
-          style={{ opacity: "calc(1 - var(--p) * 4)" }}
-        >
-          {t.hero.scroll}
-          <span className="block h-10 w-px overflow-hidden bg-line">
-            <span className="block h-1/2 w-px animate-[float-y_1.6s_ease-in-out_infinite] bg-cyan" />
-          </span>
-        </a>
       </div>
     </section>
   );
 }
 
-function FloatChip({
-  className,
-  dx,
-  dy,
-  delay,
-  children,
-}: {
-  className: string;
-  dx: number;
-  dy: number;
-  delay: string;
-  children: React.ReactNode;
-}) {
+type Parts = {
+  sheets: React.RefObject<(HTMLDivElement | null)[]>;
+  stage: React.RefObject<HTMLDivElement | null>;
+  copy: React.RefObject<HTMLDivElement | null>;
+};
+
+/** Escriu l'estat del progrés al DOM (variables CSS); mai passa per l'estat de React. */
+function paint({ sheets, stage, copy }: Parts, progress: number) {
+  const state = heroState(progress);
+  state.sheets.forEach((pose, i) => {
+    const sheet = sheets.current[i];
+    if (!sheet) return;
+    sheet.style.setProperty("--x", pose.x.toFixed(2));
+    sheet.style.setProperty("--y", pose.y.toFixed(2));
+    sheet.style.setProperty("--z", pose.z.toFixed(2));
+    sheet.style.setProperty("--rx", `${pose.rx.toFixed(2)}deg`);
+    sheet.style.setProperty("--ry", `${pose.ry.toFixed(2)}deg`);
+    sheet.style.setProperty("--rz", `${pose.rz.toFixed(2)}deg`);
+    sheet.style.setProperty("--mark", state.marks[i]!.toFixed(3));
+  });
+  stage.current?.style.setProperty("--stamp", state.stamp.toFixed(3));
+  if (copy.current) copy.current.style.opacity = String(1 - state.fade);
+}
+
+/** Amplades (en %) de les línies de cada factura: fixes, perquè cada full sigui diferent però estable. */
+const lineWidths = [
+  [72, 58, 80, 46, 64],
+  [60, 84, 52, 70, 44],
+  [78, 50, 66, 58, 74],
+  [54, 76, 62, 82, 48],
+  [68, 44, 74, 56, 80],
+  [82, 62, 48, 72, 58],
+];
+/** Quina línia de cada factura marca l'auditor. */
+const markedLine = [1, 3, 2, 0, 4, 2];
+
+function Sheet({ label, finding, invoice, total, seed }: { label: string; finding: string; invoice: string; total: string; seed: number }) {
+  const widths = lineWidths[seed % lineWidths.length]!;
+  const marked = markedLine[seed % markedLine.length]!;
   return (
-    <div
-      aria-hidden
-      className={`pointer-events-none absolute hidden md:block ${className}`}
-      style={{ transform: `translate(calc(var(--p) * ${dx}px), calc(var(--p) * ${dy}px))`, opacity: "calc(1 - var(--p) * 1.6)" }}
-    >
-      <div
-        className="flex flex-col rounded-2xl border border-line bg-night-2/70 px-5 py-3 shadow-2xl backdrop-blur-md animate-[float-y_6s_ease-in-out_infinite]"
-        style={{ animationDelay: delay }}
-      >
-        {children}
+    <div className="hero-paper">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <p className="hero-mono text-[0.55em] tracking-[0.2em] text-[#8a8f9c]">{invoice}</p>
+          <p className="display mt-[0.25em] text-[1.05em] leading-tight text-[#141a2e]">{label}</p>
+        </div>
+        <span className="hero-mono mt-[0.1em] text-[0.55em] text-[#8a8f9c]">Nº {String(104 + seed * 37).padStart(6, "0")}</span>
       </div>
+      <ul className="mt-[1.1em] grid gap-[0.7em]">
+        {widths.map((width, line) => (
+          <li key={line} className="relative flex items-center justify-between gap-[0.8em]">
+            <span className="h-[0.42em] rounded-full bg-[#e3e6ee]" style={{ width: `${width}%` }} />
+            <span className="h-[0.42em] w-[16%] shrink-0 rounded-full bg-[#d5d9e3]" />
+            {line === marked ? (
+              <>
+                <svg viewBox="0 0 200 40" preserveAspectRatio="none" className="hero-mark pointer-events-none absolute -inset-x-[0.5em] -inset-y-[0.55em] h-[calc(100%+1.1em)] w-[calc(100%+1em)]" aria-hidden>
+                  <path d="M10 22 C 12 6, 70 3, 120 5 S 196 10, 193 22 S 150 38, 96 37 S 4 34, 14 16" pathLength={1} />
+                </svg>
+                <span className="hero-finding hero-mono absolute -right-[0.6em] top-[-1.7em] rounded-[0.3em] bg-magenta px-[0.5em] py-[0.2em] text-[0.62em] font-bold uppercase tracking-wide text-white shadow-sm">
+                  {finding}
+                </span>
+              </>
+            ) : null}
+          </li>
+        ))}
+      </ul>
+      <div className="mt-[1.1em] flex items-center justify-between border-t border-dashed border-[#d5d9e3] pt-[0.8em]">
+        <span className="hero-mono text-[0.55em] font-bold tracking-[0.2em] text-[#4d5672]">{total}</span>
+        <span className="h-[0.6em] w-[30%] rounded-full bg-[#141a2e]/80" />
+      </div>
+    </div>
+  );
+}
+
+function Stamp({ text }: { text: string }) {
+  return (
+    <div className="hero-stamp pointer-events-none absolute left-[60%] top-[68%] grid aspect-square w-[56%] place-items-center rounded-full border-[0.22em] border-magenta text-magenta" aria-hidden>
+      <div className="absolute inset-[0.35em] rounded-full border-[0.08em] border-magenta/80" />
+      <span className="display px-[0.6em] text-center text-[1.05em] uppercase leading-[1.05] tracking-[0.04em]">{text}</span>
     </div>
   );
 }

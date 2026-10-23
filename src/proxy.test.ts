@@ -74,6 +74,10 @@ describe("matcher", () => {
     for (const path of ["/icon.svg", "/robots.txt", "/_next/static/chunks/a.js"]) expect(matcher.test(path), path).toBe(false);
   });
 
+  it("deixa fora de la porta les fotos de /images: l'optimitzador de Next les demana sense galetes", () => {
+    expect(matcher.test("/images/albert-giro.webp")).toBe(false);
+  });
+
   it("passa per la porta les pàgines, el formulari i els logos de clients", () => {
     for (const path of ["/", "/es", "/ca", "/api/contact", "/clients/noatum_logo.png"]) expect(matcher.test(path), path).toBe(true);
   });

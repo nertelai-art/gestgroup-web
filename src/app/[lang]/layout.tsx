@@ -55,6 +55,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
   return (
     <html lang={lang} className={`${montserrat.variable} ${mulish.variable} ${ubuntu.variable}`}>
       <body>
+        <span id="top" aria-hidden className="absolute left-0 top-0" />
         <a href="#contenido" className="skip-link">
           {t.skip}
         </a>
