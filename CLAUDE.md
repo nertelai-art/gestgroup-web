@@ -66,6 +66,14 @@ Les regles de casa (`~/.claude/CLAUDE.md`) valen aquí. Això és el que és pro
 - Branca d'integració: `developer`. A `main` no s'hi puja a mà.
 - Repositori públic a GitHub (`nertelai-art/gestgroup-web`, des del 23-10-2026); branca per defecte
   `developer`, fusions amb merge commit.
-- Vercel (`gestgroup-web`): previsualitzacions per branca. Producció només des de `main` (ho vigila
-  `ignoreCommand` de `vercel.json`) i només quan l'usuari ho diu.
+- Vercel (`gestgroup-web`, avatar amb la «G» des del 23-10-2026). Producció només des de `main` (ho
+  vigila `ignoreCommand` de `vercel.json`) i només quan l'usuari ho diu.
+  - **La branca de producció del projecte encara és `developer`**: s'ha de canviar a `main` a
+    Settings → Environments → Production (l'API no ho permet). Mentrestant, els pushos a `developer`
+    no construeixen res (els para `ignoreCommand`).
+  - El primer desplegament des de la CLI, Vercel el va posar a producció tot sol
+    (`gestgroup-web.vercel.app`, 23-10-2026), darrere la porta de la demo. Els següents, amb
+    `vercel deploy` sense `--prod`, són previsualitzacions.
+  - Des de la CLI: `pnpm --config.cache-dir=C:/Users/nerte/.pnpm-dlx dlx vercel@65.2.0 …`.
+    `.vercelignore` deixa fora `.env*.local` i `_source/`. Les crides `vercel api`, des de PowerShell.
 - El web no s'indexa (`noindex`) mentre no sigui al domini del client (`SITE_INDEXABLE=true` ho obre).

@@ -1,0 +1,7 @@
+# El que no ha de pujar mai en un desplegament fet des de la CLI (el de Git ja ho deixa fora).
+.env
+.env*.local
+_source/
+.next/
+node_modules/
+coverage/
