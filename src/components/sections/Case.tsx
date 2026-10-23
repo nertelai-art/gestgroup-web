@@ -1,3 +1,5 @@
+import Link from "next/link";
+import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { Counter } from "./Counter";
 
@@ -8,7 +10,7 @@ const ROWS = 8;
  * El desplegament de 800 mòbils (cas real del blog de Gestgroup, maig 2025). Cada rectangle són quatre
  * terminals; quan la secció entra a la pantalla, s'encenen en onada, com si es configuressin.
  */
-export function Case({ t }: { t: Dictionary }) {
+export function Case({ locale, t }: { locale: Locale; t: Dictionary }) {
   const devices = Array.from({ length: COLS * ROWS }, (_, i) => ({ col: i % COLS, row: Math.floor(i / COLS) }));
   return (
     <section id="caso" aria-labelledby="caso-title" className="relative overflow-hidden py-24 md:py-36">
@@ -26,6 +28,9 @@ export function Case({ t }: { t: Dictionary }) {
               </li>
             ))}
           </ul>
+          <Link href={`/${locale}/casos/mdm-intune-samsung`} className="reveal mt-8 inline-flex items-center gap-2 font-bold text-sky-light hover:underline">
+            {t.company.cases.read} <span aria-hidden>→</span>
+          </Link>
         </div>
 
         <div className="reveal">
@@ -42,7 +47,7 @@ export function Case({ t }: { t: Dictionary }) {
               </defs>
               {devices.map(({ col, row }) => (
                 <g key={`${col}-${row}`}>
-                  <rect x={col * 10 + 2} y={row * 16 + 2} width="6" height="12" rx="1.5" className="fill-white/[0.07]" />
+                  <rect x={col * 10 + 2} y={row * 16 + 2} width="6" height="12" rx="1.5" className="fill-snow/[0.08]" />
                   <rect
                     x={col * 10 + 2}
                     y={row * 16 + 2}

@@ -6,7 +6,7 @@ import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { GMark } from "../layout/Logo";
 import { useReducedMotion, useScrollProgress } from "../scroll/scroll";
-import { invoiceState, stepStarts } from "./invoice-phases";
+import { invoiceState } from "./invoice-phases";
 
 const intlLocale: Record<Locale, string> = { es: "es-ES", ca: "ca-ES" };
 
@@ -80,7 +80,7 @@ export function InvoiceScene({ locale, t }: { locale: Locale; t: Dictionary }) {
                     steps.current[i] = el;
                   }}
                   data-active={reduced || i === final.step ? "" : undefined}
-                  className="group grid grid-cols-[2rem_1fr] gap-x-3 rounded-2xl px-3 py-2 transition-[background-color,opacity] duration-500 data-[active]:bg-white/[0.04] max-md:hidden max-md:data-[active]:grid md:opacity-45 md:data-[active]:opacity-100"
+                  className="group grid grid-cols-[2rem_1fr] gap-x-3 rounded-2xl px-3 py-2 transition-[background-color,opacity] duration-500 data-[active]:bg-snow/[0.05] max-md:hidden max-md:data-[active]:grid md:opacity-45 md:data-[active]:opacity-100"
                 >
                   <span className="num display grid size-8 place-items-center rounded-full border border-line text-sm text-slate transition-colors group-data-[active]:border-transparent group-data-[active]:bg-[image:var(--brand-gradient)] group-data-[active]:text-white">
                     {i + 1}
@@ -95,9 +95,6 @@ export function InvoiceScene({ locale, t }: { locale: Locale; t: Dictionary }) {
             <div ref={bar} className="mt-6 hidden h-1 overflow-hidden rounded-full bg-line md:block" style={{ "--p": 1 } as React.CSSProperties}>
               <div className="h-full origin-left rounded-full bg-[image:var(--brand-gradient)]" style={{ transform: "scaleX(var(--p))" }} />
             </div>
-            <p className="sr-only">
-              {stepStarts.length} / {t.invoice.steps.map((s) => s.title).join(", ")}
-            </p>
           </div>
 
           {/* La factura. */}

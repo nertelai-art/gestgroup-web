@@ -5,10 +5,11 @@ import { useId } from "react";
  * (colors mostrejats del fitxer). PROVISIONAL fins que Gestgroup ens passi l'original.
  * Tres peces: l'arc de dalt (cian → cel), el de baix (oceà → indi → violeta) i la falca magenta.
  */
-export function GMark({ className, title }: { className?: string; title?: string }) {
+export function GMark({ className, title, ...placement }: { className?: string; title?: string } & Pick<React.SVGProps<SVGSVGElement>, "x" | "y" | "width" | "height">) {
   const id = useId().replace(/:/g, "");
   return (
-    <svg viewBox="0 0 100 100" className={className} role={title ? "img" : undefined} aria-hidden={title ? undefined : true}>
+    // x, y, width i height: per dibuixar-lo dins d'un altre SVG (l'esquema de Gestor Global).
+    <svg viewBox="0 0 100 100" {...placement} className={className} role={title ? "img" : undefined} aria-hidden={title ? undefined : true}>
       {title ? <title>{title}</title> : null}
       <defs>
         <linearGradient id={`${id}-top`} x1="0" y1="0" x2="1" y2="0">
@@ -42,14 +43,17 @@ export function GMark({ className, title }: { className?: string; title?: string
   );
 }
 
-/** Logotip complet: anell + «Gest» (cel) «group» (magenta) en Ubuntu, la lletra més propera a la del seu logotip. */
-export function Logo({ className, title = "Gestgroup", onDark = true }: { className?: string; title?: string; onDark?: boolean }) {
+/**
+ * Logotip complet: anell + «Gest» (cel) «group» (magenta) en Ubuntu, la lletra més propera a la del seu
+ * logotip. Els dos colors surten del tema (--logo-gest, --logo-group): una mica més clars sobre fosc.
+ */
+export function Logo({ className, title = "Gestgroup" }: { className?: string; title?: string }) {
   return (
     <span className={`inline-flex items-center gap-2 ${className ?? ""}`}>
       <GMark className="h-[1.9em] w-[1.9em] shrink-0" />
       <span className="font-[family-name:var(--font-ubuntu)] text-[1.35em] font-medium leading-none tracking-[-0.01em]" aria-label={title}>
-        <span style={{ color: onDark ? "#4aa6dc" : "#3593cb" }}>Gest</span>
-        <span style={{ color: onDark ? "#d62a9c" : "#b00080" }}>group</span>
+        <span className="text-[var(--logo-gest)]">Gest</span>
+        <span className="text-[var(--logo-group)]">group</span>
       </span>
     </span>
   );

@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { JsonLd } from "@/components/layout/JsonLd";
 import { RevealObserver } from "@/components/layout/RevealObserver";
+import { themeScript } from "@/components/layout/ThemeToggle";
 import { DemoBadge } from "@/demo-kit/DemoBadge";
 import { DemoTracker } from "@/demo-kit/DemoTracker";
 import { site } from "@/data/site";
@@ -20,7 +21,13 @@ const ubuntu = Ubuntu({ subsets: ["latin"], weight: "500", variable: "--font-ubu
 
 export const dynamicParams = false;
 export const generateStaticParams = () => locales.map((lang) => ({ lang }));
-export const viewport: Viewport = { themeColor: "#0a0e1c", colorScheme: "dark" };
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0a0e1c" },
+    { media: "(prefers-color-scheme: light)", color: "#f4f6fb" },
+  ],
+  colorScheme: "dark light",
+};
 
 /** El web no s'indexa mentre no sigui al domini del client. */
 const indexable = process.env.SITE_INDEXABLE === "true";
@@ -53,8 +60,13 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
   if (!isLocale(lang)) notFound();
   const t = getDictionary(lang);
   return (
-    <html lang={lang} className={`${montserrat.variable} ${mulish.variable} ${ubuntu.variable}`}>
+    // suppressHydrationWarning: l'script del tema posa data-theme a <html> abans que React hidrati.
+    <html lang={lang} className={`${montserrat.variable} ${mulish.variable} ${ubuntu.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body>
+        <span id="top" aria-hidden className="absolute left-0 top-0" />
         <a href="#contenido" className="skip-link">
           {t.skip}
         </a>
