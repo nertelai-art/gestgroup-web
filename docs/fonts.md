@@ -31,7 +31,8 @@ Pàgines: portada, quienes-somos, gestcost, gestinnova, gesthelp, blog, el cas M
 - **Nota legal** (`/nota-legal.php`): GESTGROUP IT SERVICES S.L., NIF B56762339, C/ Manuel Cazurro
   Ruiz, 3 - 3º 2ª, 17003 Girona, albert.giro@gestgroup.es. La política de privacitat i la de galetes del
   web nou en són còpia literal (`src/data/legal.ts`).
-- La resta de fotos de la seva web són de banc d'imatges: no les fem servir.
+- La resta de fotos de la seva web són de banc d'imatges. Només en fem servir tres, a «Qué hacemos»
+  (`public/images/servicio-*.webp`, de `slider-6.jpg`, `help-desk-3.jpg` i `slider-4.jpg`).
 - Logotip (`/assets/images/logo.png`, `/fav-icon/icon.png`) i logos de clients
   (`/assets/images/logos/*.png`), descarregats a `_source/` (no es puja).
 

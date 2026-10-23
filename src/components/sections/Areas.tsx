@@ -3,6 +3,7 @@
 import { useRef, useSyncExternalStore } from "react";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { useReducedMotion, useScrollProgress } from "../scroll/scroll";
+import { GMark } from "../layout/Logo";
 import { AREAS, hubState, nodePoint } from "./hub-phases";
 
 // Icones de línia (quadrícula de 24) per a les sis àrees que revisa Gestor Global.
@@ -120,7 +121,7 @@ export function Areas({ t }: { t: Dictionary }) {
 
           {/* L'esquema. */}
           <div className="relative mx-auto w-[min(80vw,34svh)] max-md:order-1 md:w-[min(44vw,74svh,36rem)]">
-            <svg viewBox="0 0 400 400" className="w-full overflow-visible" role="img" aria-label={`${a.hub}: ${a.items.map((item) => item.name).join(", ")}`}>
+            <svg viewBox="0 0 400 400" className="w-full overflow-visible" role="img" aria-label={`${a.hubRole}: ${a.items.map((item) => item.name).join(", ")}`}>
               <defs>
                 <linearGradient id="hub-gradient" x1="0" y1="0" x2="1" y2="1">
                   <stop offset="0" stopColor="#00bded" />
@@ -150,14 +151,10 @@ export function Areas({ t }: { t: Dictionary }) {
                 );
               })}
               {/* Centre: la seva empresa, amb Gestgroup com a CIO. */}
+              {/* Centre: Gestgroup, el seu CIO, que connecta les sis àrees. */}
               <g className="hub-center">
                 <circle cx="200" cy="200" r={CENTER} fill="var(--band-2)" stroke="url(#hub-gradient)" strokeWidth="3" />
-                <text x="200" y="198" textAnchor="middle" className="fill-[var(--band-ink)] font-[family-name:var(--font-display)] text-[14px] font-extrabold">
-                  {a.hub}
-                </text>
-                <text x="200" y="215" textAnchor="middle" className="fill-[var(--band-ink-soft)] text-[9.5px] font-semibold">
-                  {a.hubRole}
-                </text>
+                <GMark x={200 - 31} y={200 - 31} width={62} height={62} />
               </g>
               {a.items.map((item, i) => {
                 const p = nodePoint(i, RING);

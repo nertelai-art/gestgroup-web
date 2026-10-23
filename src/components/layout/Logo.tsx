@@ -5,10 +5,11 @@ import { useId } from "react";
  * (colors mostrejats del fitxer). PROVISIONAL fins que Gestgroup ens passi l'original.
  * Tres peces: l'arc de dalt (cian → cel), el de baix (oceà → indi → violeta) i la falca magenta.
  */
-export function GMark({ className, title }: { className?: string; title?: string }) {
+export function GMark({ className, title, ...placement }: { className?: string; title?: string } & Pick<React.SVGProps<SVGSVGElement>, "x" | "y" | "width" | "height">) {
   const id = useId().replace(/:/g, "");
   return (
-    <svg viewBox="0 0 100 100" className={className} role={title ? "img" : undefined} aria-hidden={title ? undefined : true}>
+    // x, y, width i height: per dibuixar-lo dins d'un altre SVG (l'esquema de Gestor Global).
+    <svg viewBox="0 0 100 100" {...placement} className={className} role={title ? "img" : undefined} aria-hidden={title ? undefined : true}>
       {title ? <title>{title}</title> : null}
       <defs>
         <linearGradient id={`${id}-top`} x1="0" y1="0" x2="1" y2="0">

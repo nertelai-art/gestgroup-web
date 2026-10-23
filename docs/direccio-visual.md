@@ -17,8 +17,11 @@ Cinc decisions, cadascuna amb d'on ve:
    àrees que revisen) que l'auditor marca amb magenta; números de factura en monoespaiada del sistema,
    com un tiquet. El degradat de l'anell del logotip omple el dial del mètode, un segment per fase.
    Res de logotips que giren ni de xips de xifres flotants: l'usuari els va descartar (23-10-2026).
-5. **Imatges: cap foto de banc d'imatges.** Les de la web actual són genèriques. L'argument es fa amb la
-   factura, el cicle i la flota de 800 mòbils (cas real), dibuixats.
+5. **Imatges.** L'argument es fa sobretot amb la factura, el cicle i la flota de 800 mòbils (cas real),
+   dibuixats. A «Qué hacemos» l'usuari va demanar fotos (23-10-2026): són tres fotos de banc d'imatges
+   **de la seva web actual** (slider-6, help-desk-3, slider-4), retallades i sense l'enfosquiment que hi
+   tenien. Provisionals: el millor seria fotos pròpies de Gestgroup. No es van poder generar (Hugging
+   Face sense crèdit i Gemini sense facturació).
 
 Les webs veïnes d'aquesta carpeta són de fons crema o blanc amb serif o grotesques (Ferrés, Casamoner,
 càmping) o Poppins (Nertel): aquesta no en repeteix ni el fons ni la lletra.
