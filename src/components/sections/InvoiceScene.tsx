@@ -62,7 +62,7 @@ export function InvoiceScene({ locale, t }: { locale: Locale; t: Dictionary }) {
   });
 
   return (
-    <section ref={section} aria-labelledby="factura-title" className="relative h-[460svh] max-md:h-[400svh]">
+    <section ref={section} id="factura" aria-labelledby="factura-title" className="relative h-[460svh] max-md:h-[400svh]">
       <div className="sticky top-0 flex h-svh items-center overflow-hidden pt-[var(--header-h)]">
         <div aria-hidden className="absolute left-[-20vw] top-1/3 size-[60vw] rounded-full bg-indigo/20 blur-[140px]" />
         <div className="container-x relative grid items-center gap-6 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:gap-16">

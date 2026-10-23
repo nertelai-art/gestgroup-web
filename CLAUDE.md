@@ -43,9 +43,29 @@ Les regles de casa (`~/.claude/CLAUDE.md`) valen aquí. Això és el que és pro
   amb Gestgroup on han d'arribar les sol·licituds (correu o CRM) abans de publicar-lo de debò.
 - Avís legal, privacitat i galetes: falta la raó social correcta (vegeu `docs/fonts.md`).
 - `og:image` pròpia.
-- **És una demo per a un lead**: abans d'ensenyar-la cal posar-hi el kit de demo (skill `demo-leads`).
+
+## Demo per a leads (`src/demo-kit`)
+
+- **El web és una demo per a un lead**: un cop desplegat, només s'hi entra amb un enllaç personal, i
+  qui no en porta veu la pàgina de bloqueig de Nertel (403). Els enllaços es fan amb
+  `pnpm demo:link "Nom del lead" --days 15`, que llegeix el secret de `.env.local` (el mateix que a
+  Vercel; no es puja mai ni s'imprimeix).
+- El codi ve del kit comú de les demos (`../nertel-demo-kit`, skill `demo-leads`). **No s'edita
+  aquí**: es canvia al kit i es torna a copiar.
+- Vercel: `DEMO_SECRET` i `DEMO_SITE=gestgroup` (la porta), i `NEXT_PUBLIC_POSTHOG_KEY` i
+  `NEXT_PUBLIC_POSTHOG_HOST` (el seguiment amb PostHog). Sense `DEMO_SECRET` el web és obert.
+- `src/proxy.ts` fa dues coses: primer la porta i després la redirecció de l'arrel a l'idioma, que
+  s'emporta les galetes de l'enllaç (`src/proxy.test.ts`). El formulari (`/api/contact`) també és
+  darrere la porta.
+- **Quan el web passi a ser el del client** es treu el kit: `src/proxy.ts` (s'hi queda només la
+  redirecció), `DemoTracker` i `DemoBadge` del layout, `src/demo-kit`, `posthog-js`, l'script
+  `demo:link` i les variables. I es revisa l'avís legal.
 
 ## Git
 
 - Branca d'integració: `developer`. A `main` no s'hi puja a mà.
+- Repositori públic a GitHub (`nertelai-art/gestgroup-web`, des del 23-10-2026); branca per defecte
+  `developer`, fusions amb merge commit.
+- Vercel (`gestgroup-web`): previsualitzacions per branca. Producció només des de `main` (ho vigila
+  `ignoreCommand` de `vercel.json`) i només quan l'usuari ho diu.
 - El web no s'indexa (`noindex`) mentre no sigui al domini del client (`SITE_INDEXABLE=true` ho obre).

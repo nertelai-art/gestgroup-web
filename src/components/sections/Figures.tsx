@@ -3,7 +3,7 @@ import { Counter } from "./Counter";
 
 export function Figures({ t }: { t: Dictionary }) {
   return (
-    <section aria-labelledby="cifras-title" className="relative overflow-hidden bg-[linear-gradient(100deg,#0a6fb0,#4d46c0_45%,#8d1fb0_75%,#b00080)] py-16 text-white md:py-20">
+    <section id="cifras" aria-labelledby="cifras-title" className="relative overflow-hidden bg-[linear-gradient(100deg,#0a6fb0,#4d46c0_45%,#8d1fb0_75%,#b00080)] py-16 text-white md:py-20">
       <div aria-hidden className="absolute inset-0 opacity-20 [background-image:radial-gradient(rgba(255,255,255,0.5)_1px,transparent_1px)] [background-size:18px_18px]" />
       <div className="container-x relative">
         <h2 id="cifras-title" className="sr-only">

@@ -17,10 +17,12 @@
     "test": "vitest run",
     "check": "pnpm typecheck && pnpm lint && pnpm test",
     "logos": "node scripts/prepare-logos.mjs",
+    "demo:link": "node --env-file-if-exists=.env.local src/demo-kit/link.ts",
     "prepare": "git config core.hooksPath .githooks || true"
   },
   "dependencies": {
     "next": "16.4.2",
+    "posthog-js": "1.438.19",
     "react": "19.3.1",
     "react-dom": "19.3.1"
   },

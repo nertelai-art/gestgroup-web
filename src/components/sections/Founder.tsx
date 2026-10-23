@@ -3,7 +3,7 @@ import { GMark } from "../layout/Logo";
 
 export function Founder({ t }: { t: Dictionary }) {
   return (
-    <section aria-labelledby="filosofia-title" className="band relative overflow-hidden py-24 md:py-36">
+    <section id="filosofia" aria-labelledby="filosofia-title" className="band relative overflow-hidden py-24 md:py-36">
       <GMark className="pointer-events-none absolute -right-24 -top-24 size-[28rem] opacity-[0.07] md:size-[40rem]" />
       <div className="container-x relative grid gap-12 md:grid-cols-[0.35fr_1fr]">
         <p id="filosofia-title" className="eyebrow reveal text-ocean dark:text-sky-light">
