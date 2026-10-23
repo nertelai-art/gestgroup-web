@@ -1,0 +1,380 @@
+@import "tailwindcss";
+
+/*
+ * Colors de la marca (vegeu docs/direccio-visual.md). Tots surten del logotip i de la web actual:
+ * nit = el blau marí del peu de gestgroup.es (#192032), enfosquit per al fons ·
+ * cian → cel → indi → violeta → magenta = el degradat de l'anell del logotip, mostrejat del fitxer ·
+ * cel (#3593CB) = «Gest» · magenta (#B00080) = «group».
+ */
+@theme {
+  --color-night: #0a0e1c;
+  --color-night-2: #11162b;
+  --color-night-3: #192032;
+  --color-line: rgb(255 255 255 / 0.09);
+  --color-snow: #eaeef7;
+  --color-slate: #9aa4bf;
+  --color-mist: #f3f5fa;
+  --color-mist-2: #e4e8f1;
+  --color-ink: #141a2e;
+  --color-ink-soft: #4d5672;
+
+  --color-cyan: #00bded;
+  --color-sky: #3593cb;
+  --color-ocean: #006fad;
+  --color-indigo: #4d46c0;
+  --color-violet: #9c25b6;
+  --color-magenta: #b00080;
+  --color-wine: #9f005c;
+  /* Versions clares per a text petit sobre fons fosc (contrast AA). */
+  --color-sky-light: #7cc4ee;
+  --color-pink-light: #f07cc8;
+
+  --font-display: var(--font-montserrat), "Montserrat", system-ui, sans-serif;
+  --font-sans: var(--font-mulish), "Mulish", system-ui, sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --header-h: 4.25rem;
+    --brand-gradient: linear-gradient(100deg, #00bded 0%, #3593cb 28%, #4d46c0 55%, #9c25b6 78%, #b00080 100%);
+    --brand-conic: conic-gradient(from 210deg, #00bded, #3593cb, #4d46c0, #9c25b6, #b00080, #9f005c, #00bded);
+    /* Les franges clares: en mode fosc del sistema passen a superfície fosca. */
+    --band: var(--color-mist);
+    --band-2: #ffffff;
+    --band-ink: var(--color-ink);
+    --band-ink-soft: var(--color-ink-soft);
+    --band-line: rgb(20 26 46 / 0.1);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --band: var(--color-night-2);
+      --band-2: var(--color-night-3);
+      --band-ink: var(--color-snow);
+      --band-ink-soft: var(--color-slate);
+      --band-line: var(--color-line);
+    }
+  }
+  html {
+    background: var(--color-night);
+    color: var(--color-snow);
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: var(--header-h);
+  }
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-night);
+    color: var(--color-snow);
+    overflow-x: clip;
+    line-height: 1.55;
+  }
+  ::selection {
+    background: var(--color-magenta);
+    color: #fff;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-cyan);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  img,
+  video,
+  svg {
+    max-width: 100%;
+  }
+}
+
+@layer components {
+  .display {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+  .eyebrow {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .num {
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+  .container-x {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 80rem;
+    padding-inline: max(1rem, 4vw);
+  }
+  .gradient-text {
+    background: var(--brand-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .band {
+    background: var(--band);
+    color: var(--band-ink);
+  }
+
+  .skip-link {
+    position: fixed;
+    left: 1rem;
+    top: -4rem;
+    z-index: 100;
+    padding: 0.7rem 1rem;
+    border-radius: 0.6rem;
+    background: var(--color-snow);
+    color: var(--color-night);
+    font-weight: 700;
+    transition: top 0.2s;
+  }
+  .skip-link:focus {
+    top: 1rem;
+  }
+
+  /* Botons: el principal porta el degradat del logotip; el secundari, una línia. */
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 3rem;
+    padding: 0.8rem 1.4rem;
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.95rem;
+    line-height: 1.1;
+    isolation: isolate;
+    transition:
+      transform 0.3s var(--ease-out-expo),
+      box-shadow 0.3s var(--ease-out-expo),
+      border-color 0.25s,
+      background-color 0.25s;
+  }
+  .btn:active {
+    transform: scale(0.97);
+  }
+  .btn-primary {
+    color: #fff;
+    background: var(--brand-gradient);
+    background-size: 160% 100%;
+    background-position: 0% 50%;
+    box-shadow: 0 10px 30px -12px rgb(176 0 128 / 0.6);
+    transition:
+      transform 0.3s var(--ease-out-expo),
+      box-shadow 0.3s var(--ease-out-expo),
+      background-position 0.6s var(--ease-out-expo);
+  }
+  .btn-primary:hover {
+    background-position: 100% 50%;
+    box-shadow: 0 14px 40px -12px rgb(0 189 237 / 0.55);
+  }
+  .btn-primary[disabled] {
+    opacity: 0.7;
+    cursor: progress;
+  }
+  .btn-ghost {
+    border: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+  }
+  .btn-ghost:hover {
+    border-color: currentColor;
+    background: color-mix(in srgb, currentColor 6%, transparent);
+  }
+  .btn .arrow {
+    transition: transform 0.3s var(--ease-out-expo);
+  }
+  .btn:hover .arrow {
+    transform: translateX(3px);
+  }
+
+  /* Targetes amb vora de degradat que s'encén en passar-hi per sobre. */
+  .glow-card {
+    position: relative;
+    border-radius: 1.5rem;
+    background: var(--band-2);
+    border: 1px solid var(--band-line);
+    transition:
+      transform 0.5s var(--ease-out-expo),
+      box-shadow 0.5s var(--ease-out-expo);
+  }
+  .glow-card::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: var(--brand-gradient);
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+  }
+  .glow-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 30px 60px -30px rgb(77 70 192 / 0.45);
+  }
+  .glow-card:hover::before,
+  .glow-card:focus-within::before {
+    opacity: 1;
+  }
+
+  /* Entrades discretes: només si hi ha JS i es permet moviment (data-live el posa el client). */
+  [data-live] .reveal {
+    opacity: 0;
+    transform: translateY(1.75rem);
+    transition:
+      opacity 0.9s var(--ease-out-expo),
+      transform 1.1s var(--ease-out-expo);
+    transition-delay: calc(var(--i, 0) * 90ms);
+  }
+  [data-live] .reveal[data-shown] {
+    opacity: 1;
+    transform: none;
+  }
+  /* El titular entra paraula a paraula. */
+  [data-live] .reveal-words .w {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(0.6em) rotate(2deg);
+    transition:
+      opacity 0.8s var(--ease-out-expo),
+      transform 1s var(--ease-out-expo);
+    transition-delay: calc(var(--w, 0) * 70ms + 120ms);
+  }
+  [data-live] .reveal-words[data-shown] .w {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Logos de clients: cinta contínua. Es para en passar-hi per sobre i amb moviment reduït. */
+  .marquee {
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 48s linear infinite;
+  }
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+  /* Logos sense fons (scripts/prepare-logos.mjs): grisos sobre clar, blancs sobre fosc, color en passar-hi. */
+  .client-logo {
+    filter: grayscale(1);
+    opacity: 0.6;
+    transition:
+      filter 0.3s,
+      opacity 0.3s;
+  }
+  .client-logo:hover {
+    filter: none;
+    opacity: 1;
+  }
+  @media (prefers-color-scheme: dark) {
+    .client-logo {
+      filter: brightness(0) invert(1);
+      opacity: 0.55;
+    }
+    .client-logo:hover {
+      filter: brightness(0) invert(1);
+      opacity: 1;
+    }
+  }
+}
+
+/* Escena de la factura: cada fila llegeix --enter, --scan i --cut (0-1) que escriu el scroll. */
+.invoice-row {
+  opacity: var(--enter);
+  transform: translateX(calc((1 - var(--enter)) * 2.5rem));
+  background: rgb(176 0 128 / calc(var(--scan) * (1 - var(--cut)) * 0.12));
+  transition: background-color 0.2s;
+}
+.invoice-finding {
+  opacity: var(--scan);
+  transform: translateX(calc((1 - var(--scan)) * -0.5rem));
+}
+.invoice-before {
+  opacity: var(--cut);
+}
+.invoice-stamp {
+  opacity: var(--stamp);
+  transform: scale(calc(0.5 + var(--stamp) * 0.5)) rotate(calc((1 - var(--stamp)) * -60deg - 12deg));
+}
+
+/* Cicle Kaizen: l'anell es dibuixa amb --draw i cada node s'encén amb el seu --lit. */
+.cycle-node {
+  --lit: 1;
+  opacity: calc(0.35 + var(--lit) * 0.65);
+  transform: translate(-50%, -50%) scale(calc(0.85 + var(--lit) * 0.15));
+}
+
+/* Flota de 800 mòbils: s'encenen en onada quan la targeta entra (data-shown la posa RevealObserver). */
+[data-live] .fleet-on {
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+  transition-delay: calc(var(--d) * 45ms + 300ms);
+}
+[data-live] [data-shown] .fleet-on {
+  opacity: 1;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes ring-idle {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes float-y {
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+    flex-wrap: wrap;
+    width: auto;
+    justify-content: center;
+  }
+  .marquee-track > [aria-hidden="true"] {
+    display: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

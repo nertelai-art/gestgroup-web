@@ -1,0 +1,11 @@
+node_modules/
+.next/
+out/
+.vercel/
+*.tsbuildinfo
+next-env.d.ts
+.env
+.env*.local
+coverage/
+# Material en brut descarregat de gestgroup.es: es queda en local. El web en fa servir el que hi ha a public/.
+_source/

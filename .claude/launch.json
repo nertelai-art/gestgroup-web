@@ -1,0 +1,19 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "gestgroup-dev",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["dev"],
+      "port": 3000,
+      "autoPort": true
+    },
+    {
+      "name": "gestgroup-prod",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["start", "-p", "3100"],
+      "port": 3100,
+      "autoPort": true
+    }
+  ]
+}

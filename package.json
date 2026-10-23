@@ -1,0 +1,45 @@
+{
+  "name": "gestgroup-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "dev": "next dev --webpack",
+    "build": "next build",
+    "build:local": "next build --webpack",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "next typegen && tsc --noEmit",
+    "test": "vitest run",
+    "check": "pnpm typecheck && pnpm lint && pnpm test",
+    "logos": "node scripts/prepare-logos.mjs",
+    "prepare": "git config core.hooksPath .githooks || true"
+  },
+  "dependencies": {
+    "next": "16.4.2",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "24.19.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.4.2",
+    "sharp": "0.35.5",
+    "tailwindcss": "4.3.3",
+    "typescript": "6.0.3",
+    "vitest": "5.0.5"
+  },
+  "//": [
+    "typescript@6 i eslint@9 a posta: typescript-eslint 8.72 demana TS <6.1 i eslint-plugin-react 7.37 no suporta ESLint 10 (comprovat al registre el 2026-10-23).",
+    "@types/node@24 perquè el runtime és Node 24.",
+    "Sense three.js: les escenes són DOM i SVG guiats pel scroll.",
+    "sharp només per a scripts/prepare-logos.mjs (no entra al web)."
+  ]
+}
