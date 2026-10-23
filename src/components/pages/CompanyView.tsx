@@ -79,14 +79,14 @@ export function CompanyView({ locale, t }: { locale: Locale; t: Dictionary }) {
       {/* Valors: l'Albert. */}
       <section aria-labelledby="empresa-valors" className="band overflow-hidden py-20 md:py-28">
         <div className="container-x grid items-center gap-12 md:grid-cols-[0.75fr_1.25fr] md:gap-16">
-          <figure className="reveal relative mx-auto w-full max-w-sm">
+          <figure className="reveal relative mx-auto w-full max-w-[15rem] md:max-w-sm">
             <div aria-hidden className="absolute -inset-3 rounded-[2rem] bg-[image:var(--brand-gradient)] opacity-80 blur-[2px]" />
             <div className="relative overflow-hidden rounded-[1.75rem] bg-white">
               <Image src={site.ceo.photo} alt={c.values.photoAlt} width={350} height={525} className="h-auto w-full" sizes="(min-width: 768px) 24rem, 90vw" />
             </div>
           </figure>
           <div>
-            <p className="eyebrow reveal text-ocean dark:text-sky-light">{c.values.eyebrow}</p>
+            <p className="eyebrow reveal text-sky-light">{c.values.eyebrow}</p>
             <h2 id="empresa-valors" className="display reveal mt-4 text-[clamp(2rem,4.5vw,3.5rem)]">
               {c.values.title}
             </h2>
@@ -96,7 +96,7 @@ export function CompanyView({ locale, t }: { locale: Locale; t: Dictionary }) {
                 <span className="display block text-lg">{site.ceo.name}</span>
                 <span className="text-sm text-[var(--band-ink-soft)]">{c.values.role}</span>
               </p>
-              <a href={site.ceo.linkedin} target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-ocean underline-offset-4 hover:underline dark:text-sky-light">
+              <a href={site.ceo.linkedin} target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-sky-light underline-offset-4 hover:underline">
                 {c.values.linkedin} ↗
               </a>
             </div>

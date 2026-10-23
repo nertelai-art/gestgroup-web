@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { locales, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { Logo } from "./Logo";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function Header({ locale, t }: { locale: Locale; t: Dictionary }) {
   const [scrolled, setScrolled] = useState(false);
@@ -58,6 +59,7 @@ export function Header({ locale, t }: { locale: Locale; t: Dictionary }) {
         </nav>
 
         <div className="flex items-center gap-3">
+          <ThemeToggle labels={{ light: t.nav.themeLight, dark: t.nav.themeDark }} />
           <LanguageSwitch locale={locale} label={t.nav.language} className="hidden sm:flex" />
           <Link href={`/${locale}#contacto`} className="btn btn-primary hidden min-h-10 px-5 py-2 text-sm sm:inline-flex">
             {t.nav.cta}

@@ -90,7 +90,7 @@ export function CycleScene({ t }: { t: Dictionary }) {
                 </radialGradient>
               </defs>
               {/* Marques de rellotge a l'interior: el ritme de la millora contínua. */}
-              <g stroke="currentColor" className="text-white/15">
+              <g stroke="currentColor" className="text-snow/15">
                 {Array.from({ length: 48 }, (_, i) => {
                   const a = pointAt(i * 7.5, 70);
                   const b = pointAt(i * 7.5, i % 12 === 0 ? 63 : 67);
@@ -98,7 +98,7 @@ export function CycleScene({ t }: { t: Dictionary }) {
                 })}
               </g>
               {[0, 1, 2, 3].map((i) => (
-                <path key={`track-${i}`} d={arcPath(i)} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="9" strokeLinecap="round" />
+                <path key={`track-${i}`} d={arcPath(i)} fill="none" stroke="var(--color-line)" strokeWidth="9" strokeLinecap="round" />
               ))}
               {[0, 1, 2, 3].map((i) => (
                 <path
@@ -118,7 +118,7 @@ export function CycleScene({ t }: { t: Dictionary }) {
               ))}
               <g ref={tip} transform={`translate(${end.x.toFixed(2)} ${end.y.toFixed(2)})`}>
                 <circle r="16" fill="url(#dial-glow)" />
-                <circle r="4" fill="#fff" />
+                <circle r="4" fill="#fff" stroke="var(--color-cyan)" strokeWidth="1.5" />
               </g>
             </svg>
 

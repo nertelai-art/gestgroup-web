@@ -42,14 +42,17 @@ export function GMark({ className, title }: { className?: string; title?: string
   );
 }
 
-/** Logotip complet: anell + «Gest» (cel) «group» (magenta) en Ubuntu, la lletra més propera a la del seu logotip. */
-export function Logo({ className, title = "Gestgroup", onDark = true }: { className?: string; title?: string; onDark?: boolean }) {
+/**
+ * Logotip complet: anell + «Gest» (cel) «group» (magenta) en Ubuntu, la lletra més propera a la del seu
+ * logotip. Els dos colors surten del tema (--logo-gest, --logo-group): una mica més clars sobre fosc.
+ */
+export function Logo({ className, title = "Gestgroup" }: { className?: string; title?: string }) {
   return (
     <span className={`inline-flex items-center gap-2 ${className ?? ""}`}>
       <GMark className="h-[1.9em] w-[1.9em] shrink-0" />
       <span className="font-[family-name:var(--font-ubuntu)] text-[1.35em] font-medium leading-none tracking-[-0.01em]" aria-label={title}>
-        <span style={{ color: onDark ? "#4aa6dc" : "#3593cb" }}>Gest</span>
-        <span style={{ color: onDark ? "#d62a9c" : "#b00080" }}>group</span>
+        <span className="text-[var(--logo-gest)]">Gest</span>
+        <span className="text-[var(--logo-group)]">group</span>
       </span>
     </span>
   );

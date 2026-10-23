@@ -47,7 +47,7 @@ export function Case({ locale, t }: { locale: Locale; t: Dictionary }) {
               </defs>
               {devices.map(({ col, row }) => (
                 <g key={`${col}-${row}`}>
-                  <rect x={col * 10 + 2} y={row * 16 + 2} width="6" height="12" rx="1.5" className="fill-white/[0.07]" />
+                  <rect x={col * 10 + 2} y={row * 16 + 2} width="6" height="12" rx="1.5" className="fill-snow/[0.08]" />
                   <rect
                     x={col * 10 + 2}
                     y={row * 16 + 2}

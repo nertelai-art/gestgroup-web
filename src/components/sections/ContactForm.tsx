@@ -116,9 +116,18 @@ export function ContactForm({ locale, t }: { locale: Locale; t: Dictionary }) {
         <legend className="mb-3 text-sm font-semibold">{f.interests}</legend>
         <div className="flex flex-wrap gap-2">
           {interestIds.map((id) => (
-            <label key={id} className="cursor-pointer">
+            <label key={id} className="group cursor-pointer">
               <input type="checkbox" name="interests" value={id} className="peer sr-only" defaultChecked={id === "costs"} />
-              <span className="inline-block rounded-full border border-line px-4 py-2 text-sm text-slate transition-colors peer-checked:border-transparent peer-checked:bg-[image:var(--brand-gradient)] peer-checked:text-white peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-cyan hover:border-snow/50">
+              {/* Xip de casella: vora visible sempre; marcat, vora cian, fons tenyit i ✓. */}
+              <span className="inline-flex min-h-11 items-center gap-2.5 rounded-full border border-snow/25 bg-night py-2 pl-2.5 pr-4 text-sm font-semibold text-slate transition-[border-color,background-color,color] duration-200 hover:border-snow/50 hover:text-snow peer-checked:border-cyan peer-checked:bg-cyan/10 peer-checked:text-snow peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-cyan">
+                <span
+                  aria-hidden
+                  className="grid size-5 place-items-center rounded-full border border-snow/35 text-transparent transition-colors group-has-[:checked]:border-cyan group-has-[:checked]:bg-cyan group-has-[:checked]:text-white"
+                >
+                  <svg viewBox="0 0 16 16" className="size-3">
+                    <path d="M3.5 8.5l3 3 6-6.5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </span>
                 {f.interestOptions[id]}
               </span>
             </label>

@@ -10,7 +10,7 @@ export function Founder({ locale, t }: { locale: Locale; t: Dictionary }) {
     <section id="filosofia" aria-labelledby="filosofia-title" className="band relative overflow-hidden py-24 md:py-36">
       <GMark className="pointer-events-none absolute -right-24 -top-24 size-[28rem] opacity-[0.07] md:size-[40rem]" />
       <div className="container-x relative grid gap-12 md:grid-cols-[0.35fr_1fr]">
-        <p id="filosofia-title" className="eyebrow reveal text-ocean dark:text-sky-light">
+        <p id="filosofia-title" className="eyebrow reveal text-sky-light">
           {t.founder.eyebrow}
         </p>
         <figure>
@@ -30,7 +30,7 @@ export function Founder({ locale, t }: { locale: Locale; t: Dictionary }) {
             </span>
           </figcaption>
           <p className="reveal mt-10 max-w-2xl border-l-2 border-magenta pl-5 text-[var(--band-ink-soft)]">{t.founder.text}</p>
-          <Link href={`/${locale}/empresa`} className="reveal mt-6 inline-flex items-center gap-2 font-bold text-ocean hover:underline dark:text-sky-light">
+          <Link href={`/${locale}/empresa`} className="reveal mt-6 inline-flex items-center gap-2 font-bold text-sky-light hover:underline">
             {t.founder.more} <span aria-hidden>→</span>
           </Link>
         </figure>

@@ -42,5 +42,8 @@ export function tipAngle(draw: number) {
 /** Punt (en unitats del viewBox de 200 × 200) d'un angle sobre el dial. */
 export function pointAt(angle: number, radius = 84) {
   const radians = ((angle - 90) * Math.PI) / 180;
-  return { x: 100 + radius * Math.cos(radians), y: 100 + radius * Math.sin(radians) };
+  // A mil·lèsimes: Node i el navegador no sempre coincideixen a l'últim decimal de sin/cos, i l'SVG
+  // pintat al servidor no quadraria amb el del client (error d'hidratació).
+  const round = (value: number) => Math.round(value * 1000) / 1000;
+  return { x: round(100 + radius * Math.cos(radians)), y: round(100 + radius * Math.sin(radians)) };
 }

@@ -2,7 +2,9 @@
 
 Cinc decisions, cadascuna amb d'on ve:
 
-1. **Color dominant: blau nit (#0a0e1c).** És el blau marí del peu de la web actual (#192032),
+0. **Dos temes.** Fosc (el de sempre) i clar (fons #f4f6fb, targetes blanques, tinta #141a2e), a
+   petició de l'usuari (23-10-2026): el fosc sol se li feia massa fosc. Mateixos accents en tots dos.
+1. **Color dominant (tema fosc): blau nit (#0a0e1c).** És el blau marí del peu de la web actual (#192032),
    enfosquit. Una consultoria que parla de suport 24/7 i de tecnologia; i el degradat del logotip
    llueix sobre fosc. Franges clares (#f3f5fa) per als logos de clients, els serveis i la filosofia,
    que passen a fosc si el sistema està en mode fosc.

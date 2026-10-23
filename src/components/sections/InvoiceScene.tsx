@@ -80,7 +80,7 @@ export function InvoiceScene({ locale, t }: { locale: Locale; t: Dictionary }) {
                     steps.current[i] = el;
                   }}
                   data-active={reduced || i === final.step ? "" : undefined}
-                  className="group grid grid-cols-[2rem_1fr] gap-x-3 rounded-2xl px-3 py-2 transition-[background-color,opacity] duration-500 data-[active]:bg-white/[0.04] max-md:hidden max-md:data-[active]:grid md:opacity-45 md:data-[active]:opacity-100"
+                  className="group grid grid-cols-[2rem_1fr] gap-x-3 rounded-2xl px-3 py-2 transition-[background-color,opacity] duration-500 data-[active]:bg-snow/[0.05] max-md:hidden max-md:data-[active]:grid md:opacity-45 md:data-[active]:opacity-100"
                 >
                   <span className="num display grid size-8 place-items-center rounded-full border border-line text-sm text-slate transition-colors group-data-[active]:border-transparent group-data-[active]:bg-[image:var(--brand-gradient)] group-data-[active]:text-white">
                     {i + 1}

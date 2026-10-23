@@ -39,6 +39,24 @@ Les regles de casa (`~/.claude/CLAUDE.md`) valen aquí. Això és el que és pro
   fotograma. S'actualitza a l'esdeveniment, sense rAF: en un panell de navegador amagat el rAF no corre.
 - Cada escena té l'estat final a l'HTML i respecta `prefers-reduced-motion`.
 - Direcció visual i logotip: `docs/direccio-visual.md`. El logotip és redibuixat i provisional.
+- Les coordenades dels SVG calculades amb sin/cos s'arrodoneixen (`pointAt`): Node i el navegador no
+  coincideixen a l'últim decimal i donava error d'hidratació.
+
+## Temes
+
+- Fosc i clar. Per defecte, el del sistema; el botó de la capçalera (`ThemeToggle`) el fixa i el desa a
+  `localStorage` (`gg-theme`), i un script al `<head>` el posa abans de pintar.
+- Els tokens de `globals.css` són **papers, no colors**: `night` = fons, `night-2` = targetes, `snow` =
+  text, `slate` = text secundari. En clar canvien de valor; les classes (`bg-night`, `text-snow`…) no.
+  Res de `dark:` ni de blancs fixos: si un color ha de canviar amb el tema, ha de ser un token.
+- Text petit de color: `text-sky-light` i `text-pink-light` (més clars en fosc, més foscos en clar).
+
+## Portada
+
+- Hero → clients → «Qué hacemos» (resum de tres serveis) → «Gestor Global» (les sis àrees) → la
+  factura → el mètode → «Soporte 24/7» (el tiquet i el helpdesk) → xifres → cas → filosofia →
+  preguntes → contacte. L'usuari va demanar «Qué hacemos» menys carregat (23-10-2026): el resum només
+  resumeix, i cada servei gran té la seva secció.
 
 ## Pàgines
 

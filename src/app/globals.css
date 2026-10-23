@@ -2,21 +2,21 @@
 
 /*
  * Colors de la marca (vegeu docs/direccio-visual.md). Tots surten del logotip i de la web actual:
- * nit = el blau marí del peu de gestgroup.es (#192032), enfosquit per al fons ·
  * cian → cel → indi → violeta → magenta = el degradat de l'anell del logotip, mostrejat del fitxer ·
- * cel (#3593CB) = «Gest» · magenta (#B00080) = «group».
+ * cel (#3593CB) = «Gest» · magenta (#B00080) = «group» · nit = el blau marí del peu de gestgroup.es.
+ *
+ * Dos temes, fosc i clar. Els noms són PAPERS, no colors: «night» és el fons de la pàgina, «night-2»
+ * el de les targetes, «snow» el text principal i «slate» el secundari. En clar, «night» és gairebé blanc
+ * i «snow» és tinta. Així cada classe (bg-night, text-snow…) segueix el tema sense duplicar-la.
  */
 @theme {
   --color-night: #0a0e1c;
   --color-night-2: #11162b;
   --color-night-3: #192032;
-  --color-line: rgb(255 255 255 / 0.09);
+  --color-line: rgb(255 255 255 / 0.1);
   --color-snow: #eaeef7;
-  --color-slate: #9aa4bf;
-  --color-mist: #f3f5fa;
-  --color-mist-2: #e4e8f1;
+  --color-slate: #a3adc7;
   --color-ink: #141a2e;
-  --color-ink-soft: #4d5672;
 
   --color-cyan: #00bded;
   --color-sky: #3593cb;
@@ -25,7 +25,7 @@
   --color-violet: #9c25b6;
   --color-magenta: #b00080;
   --color-wine: #9f005c;
-  /* Versions clares per a text petit sobre fons fosc (contrast AA). */
+  /* Per a text petit de color: més clars en fosc, més foscos en clar (contrast AA en tots dos). */
   --color-sky-light: #7cc4ee;
   --color-pink-light: #f07cc8;
 
@@ -36,28 +36,61 @@
   --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
 }
 
+:root {
+  color-scheme: dark;
+  --header-h: 4.25rem;
+  --brand-gradient: linear-gradient(100deg, #00bded 0%, #3593cb 28%, #4d46c0 55%, #9c25b6 78%, #b00080 100%);
+  --brand-conic: conic-gradient(from 210deg, #00bded, #3593cb, #4d46c0, #9c25b6, #b00080, #9f005c, #00bded);
+  /* Franges: una superfície que es distingeix del fons de la pàgina, en cada tema. */
+  --band: var(--color-night-2);
+  --band-2: var(--color-night-3);
+  --band-ink: var(--color-snow);
+  --band-ink-soft: var(--color-slate);
+  --band-line: var(--color-line);
+  --logo-gest: #4aa6dc;
+  --logo-group: #e03aa8;
+  --paper-shadow: 0 2px 4px rgb(0 0 0 / 0.18), 0 24px 50px -12px rgb(0 0 0 / 0.55);
+}
+
+/* Tema clar. Es repeteix per al sistema en clar (si l'usuari no ha triat fosc) i per a l'elecció explícita. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    color-scheme: light;
+    --color-night: #f4f6fb;
+    --color-night-2: #ffffff;
+    --color-night-3: #e9edf5;
+    --color-line: rgb(20 26 46 / 0.12);
+    --color-snow: #141a2e;
+    --color-slate: #4a5470;
+    --color-cyan: #0083b0;
+    --color-sky-light: #0a679c;
+    --color-pink-light: #a3006f;
+    --band: #ffffff;
+    --band-2: #f4f6fb;
+    --logo-gest: #3593cb;
+    --logo-group: #b00080;
+    --paper-shadow: 0 1px 2px rgb(20 26 46 / 0.12), 0 22px 44px -16px rgb(20 26 46 / 0.35);
+  }
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --color-night: #f4f6fb;
+  --color-night-2: #ffffff;
+  --color-night-3: #e9edf5;
+  --color-line: rgb(20 26 46 / 0.12);
+  --color-snow: #141a2e;
+  --color-slate: #4a5470;
+  --color-cyan: #0083b0;
+  --color-sky-light: #0a679c;
+  --color-pink-light: #a3006f;
+  --band: #ffffff;
+  --band-2: #f4f6fb;
+  --logo-gest: #3593cb;
+  --logo-group: #b00080;
+  --paper-shadow: 0 1px 2px rgb(20 26 46 / 0.12), 0 22px 44px -16px rgb(20 26 46 / 0.35);
+}
+
 @layer base {
-  :root {
-    color-scheme: dark;
-    --header-h: 4.25rem;
-    --brand-gradient: linear-gradient(100deg, #00bded 0%, #3593cb 28%, #4d46c0 55%, #9c25b6 78%, #b00080 100%);
-    --brand-conic: conic-gradient(from 210deg, #00bded, #3593cb, #4d46c0, #9c25b6, #b00080, #9f005c, #00bded);
-    /* Les franges clares: en mode fosc del sistema passen a superfície fosca. */
-    --band: var(--color-mist);
-    --band-2: #ffffff;
-    --band-ink: var(--color-ink);
-    --band-ink-soft: var(--color-ink-soft);
-    --band-line: rgb(20 26 46 / 0.1);
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --band: var(--color-night-2);
-      --band-2: var(--color-night-3);
-      --band-ink: var(--color-snow);
-      --band-ink-soft: var(--color-slate);
-      --band-line: var(--color-line);
-    }
-  }
   html {
     background: var(--color-night);
     color: var(--color-snow);
@@ -272,33 +305,38 @@
   .marquee:hover .marquee-track {
     animation-play-state: paused;
   }
-  /* Logos sense fons (scripts/prepare-logos.mjs): grisos sobre clar, blancs sobre fosc, color en passar-hi. */
+  /* Logos sense fons (scripts/prepare-logos.mjs): blancs sobre fosc, grisos sobre clar, color en passar-hi. */
   .client-logo {
-    filter: grayscale(1);
+    filter: brightness(0) invert(1);
     opacity: 0.6;
     transition:
       filter 0.3s,
       opacity 0.3s;
   }
   .client-logo:hover {
-    filter: none;
     opacity: 1;
-  }
-  @media (prefers-color-scheme: dark) {
-    .client-logo {
-      filter: brightness(0) invert(1);
-      opacity: 0.55;
-    }
-    .client-logo:hover {
-      filter: brightness(0) invert(1);
-      opacity: 1;
-    }
   }
 }
 
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .client-logo {
+    filter: grayscale(1);
+  }
+  :root:not([data-theme="dark"]) .client-logo:hover {
+    filter: none;
+  }
+}
+:root[data-theme="light"] .client-logo {
+  filter: grayscale(1);
+}
+:root[data-theme="light"] .client-logo:hover {
+  filter: none;
+}
+
+
 /* Pàgines legals i del cas d'èxit: text llarg, ben llegible. */
 .legal-body {
-  color: rgb(234 238 247 / 0.85);
+  color: color-mix(in srgb, var(--color-snow) 85%, transparent);
 }
 .legal-body h2 {
   margin-top: 3rem;
@@ -420,8 +458,7 @@
   background: linear-gradient(180deg, #ffffff, #f6f6f2);
   box-shadow:
     0 1px 0 rgb(255 255 255 / 0.6) inset,
-    0 2px 4px rgb(0 0 0 / 0.18),
-    0 24px 50px -12px rgb(0 0 0 / 0.55);
+    var(--paper-shadow);
   backface-visibility: hidden;
 }
 .hero-mono {
@@ -465,6 +502,8 @@
 .ticket-dot {
   color: #fff;
   isolation: isolate;
+  background: var(--color-slate) !important;
+  border-color: transparent !important;
 }
 .ticket-status-a {
   opacity: 0;

@@ -54,6 +54,14 @@ describe("dial", () => {
     }
   });
 
+  it("arrodoneix els punts a mil·lèsimes: servidor i navegador han de pintar el mateix SVG", () => {
+    for (let angle = 0; angle < 360; angle += 7.5) {
+      const { x, y } = pointAt(angle, 70);
+      expect(Math.round(x * 1000) / 1000).toBe(x);
+      expect(Math.round(y * 1000) / 1000).toBe(y);
+    }
+  });
+
   it("posa el zero a dalt del dial", () => {
     expect(pointAt(0).x).toBeCloseTo(100);
     expect(pointAt(0).y).toBeCloseTo(16);
