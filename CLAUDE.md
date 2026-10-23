@@ -33,8 +33,10 @@ Les regles de casa (`~/.claude/CLAUDE.md`) valen aquí. Això és el que és pro
   l'auditor marca, s'ordena i rep el segell «Bajo control»), Gestor Global (`Areas`: l'esquema CIO, el
   logotip de Gestgroup al centre i les sis àrees que s'encenen), la factura (`InvoiceScene`) i el dial
   del mètode (`CycleScene`). La coreografia va en fitxers `*-phases.ts` de TypeScript pur, amb proves.
-- «Qué hacemos» (`Services`) no és una escena: una foto i una frase per servei; a escriptori la foto
-  queda fixa i canvia amb una cortina. L'usuari no volia gràfics ni dades en aquesta secció (23-10-2026).
+- «Qué hacemos» (`Services`) no és una escena: una fila per servei, foto i text junts, alternant el
+  costat. En entrar, la foto s'obre cap al text i després apareix el text (`.reveal-group` de
+  `RevealObserver`). L'usuari no volia gràfics ni dades aquí, i la foto fixa amb cortina li va semblar
+  un embolic (23-10-2026).
 - `Areas` només passa a mode fix (`data-mode="scroll"`) un cop hidratat i sense moviment reduït; sense
   JS es veu com a secció normal amb tot el contingut.
 - La primera pantalla porta a l'HTML la pila desordenada (el que es veu en arribar), no l'estat final:

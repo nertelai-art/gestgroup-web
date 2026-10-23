@@ -409,32 +409,45 @@
   transform: none;
 }
 
-/* ── «Qué hacemos»: fotos amb cortina ─────────────────────────────────────────────────────────────
-   Cada foto és tancada (retallada a zero des de dalt) fins que el seu servei es llegeix; llavors s'obre
-   de baix a dalt i fa un zoom suau d'1,12 a 1. Sense JS, només hi ha la primera oberta i tot es veu. */
-.svc-frame {
-  clip-path: inset(100% 0 0 0);
-  transition: clip-path 1.1s var(--ease-in-out-quint);
+/* ── «Qué hacemos»: files foto + text ─────────────────────────────────────────────────────────────
+   Quan la fila entra (data-shown, de RevealObserver), la foto s'obre cap al costat del text —d'esquerra
+   a dreta, de dreta a esquerra a les files girades, i de dalt a baix a mòbil— amb un zoom suau, i
+   després entra el text. Sense data-live (sense JS o amb moviment reduït), tot es veu de cop. */
+[data-live] .svc-row .svc-photo-wrap {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1.2s var(--ease-in-out-quint);
 }
-.svc-frame[data-open] {
+@media (min-width: 768px) {
+  [data-live] .svc-row .svc-photo-wrap {
+    clip-path: inset(0 100% 0 0);
+  }
+  [data-live] .svc-row-flip .svc-photo-wrap {
+    clip-path: inset(0 0 0 100%);
+  }
+}
+[data-live] .svc-row[data-shown] .svc-photo-wrap {
   clip-path: inset(0 0 0 0);
 }
-.svc-frame .svc-photo {
-  transform: scale(1.12);
-  transition: transform 1.6s var(--ease-out-expo);
+[data-live] .svc-row .svc-photo {
+  transform: scale(1.15);
+  transition: transform 1.8s var(--ease-out-expo);
 }
-.svc-frame[data-open] .svc-photo {
-  transform: scale(1);
+[data-live] .svc-row[data-shown] .svc-photo {
+  transform: none;
 }
-/* El servei que no es llegeix queda apagat (només amb JS i a escriptori). */
-@media (min-width: 768px) {
-  [data-live] .svc-item {
-    opacity: 0.3;
-    transition: opacity 0.6s var(--ease-out-expo);
-  }
-  [data-live] .svc-item[data-active] {
-    opacity: 1;
-  }
+.svc-row .svc-photo-wrap:hover .svc-photo {
+  transform: scale(1.04);
+}
+[data-live] .svc-row .svc-text {
+  opacity: 0;
+  transform: translateY(1.5rem);
+  transition:
+    opacity 0.8s var(--ease-out-expo) 0.45s,
+    transform 1s var(--ease-out-expo) 0.45s;
+}
+[data-live] .svc-row[data-shown] .svc-text {
+  opacity: 1;
+  transform: none;
 }
 
 /* ── Gestor Global: l'esquema CIO ─────────────────────────────────────────────────────────────────
