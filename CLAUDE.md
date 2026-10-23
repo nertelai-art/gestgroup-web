@@ -29,9 +29,13 @@ Les regles de casa (`~/.claude/CLAUDE.md`) valen aquí. Això és el que és pro
 
 ## Escenes
 
-- Tres escenes guiades pel scroll, sense three.js: la primera pantalla (pila de factures en 3D CSS que
-  l'auditor marca, s'ordena i rep el segell «Bajo control»), la factura (`InvoiceScene`) i el dial del
-  mètode (`CycleScene`). La coreografia va en fitxers `*-phases.ts` de TypeScript pur, amb proves.
+- Cinc escenes guiades pel scroll, sense three.js: la primera pantalla (pila de factures en 3D CSS que
+  l'auditor marca, s'ordena i rep el segell «Bajo control»), «Qué hacemos» (`Services`: tres panells
+  que llisquen en horitzontal, cadascun amb la seva peça animada), Gestor Global (`Areas`: l'esquema
+  CIO, la seva empresa al centre i les sis àrees que s'encenen), la factura (`InvoiceScene`) i el dial
+  del mètode (`CycleScene`). La coreografia va en fitxers `*-phases.ts` de TypeScript pur, amb proves.
+- `Services` i `Areas` només passen a mode fix (`data-mode="scroll"`) un cop hidratats i sense moviment
+  reduït; sense JS es veuen com a seccions normals amb tot el contingut.
 - La primera pantalla porta a l'HTML la pila desordenada (el que es veu en arribar), no l'estat final:
   és l'única excepció. Amb moviment reduït es pinta ordenada i segellada.
 - Res de xips de xifres flotants ni del logotip girant: l'usuari els va trobar «molt d'IA» (23-10-2026).
@@ -53,10 +57,10 @@ Les regles de casa (`~/.claude/CLAUDE.md`) valen aquí. Això és el que és pro
 
 ## Portada
 
-- Hero → clients → «Qué hacemos» (resum de tres serveis) → «Gestor Global» (les sis àrees) → la
+- Hero → clients → «Qué hacemos» (tres panells horitzontals) → «Gestor Global» (l'esquema CIO) → la
   factura → el mètode → «Soporte 24/7» (el tiquet i el helpdesk) → xifres → cas → filosofia →
-  preguntes → contacte. L'usuari va demanar «Qué hacemos» menys carregat (23-10-2026): el resum només
-  resumeix, i cada servei gran té la seva secció.
+  preguntes → contacte. L'usuari va demanar «Qué hacemos» i Gestor Global més entenedors i animats
+  (23-10-2026): cada servei, una peça que l'explica sense haver de llegir-ho tot.
 
 ## Pàgines
 

@@ -409,6 +409,334 @@
   transform: none;
 }
 
+/* ── «Qué hacemos»: panells horitzontals ─────────────────────────────────────────────────────────
+   Sense data-mode (sense JS o amb moviment reduït), els panells van un sota l'altre i tots actius.
+   Amb data-mode="scroll", la secció fa 300svh, queda fixa i el carril es mou amb --pos (en panells). */
+.svc-head {
+  padding-top: 6rem;
+}
+.svc-progress {
+  display: none;
+}
+.svc-track {
+  display: grid;
+  gap: 4rem;
+  padding-block: 3rem 6rem;
+}
+.svc[data-mode="scroll"] {
+  height: 300svh;
+}
+.svc[data-mode="scroll"] .svc-sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding-top: var(--header-h);
+}
+.svc[data-mode="scroll"] .svc-head {
+  padding-top: 2.5rem;
+}
+.svc[data-mode="scroll"] .svc-progress {
+  display: flex;
+}
+.svc[data-mode="scroll"] .svc-viewport {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+.svc[data-mode="scroll"] .svc-track {
+  display: flex;
+  gap: 0;
+  padding: 0;
+  height: 100%;
+  width: 300vw;
+  transform: translate3d(calc(var(--pos, 0) * -100vw), 0, 0);
+  will-change: transform;
+}
+.svc[data-mode="scroll"] .svc-panel {
+  width: 100vw;
+  flex-shrink: 0;
+  height: 100%;
+}
+/* El text i la peça d'un panell que no es llegeix queden apagats. */
+.svc[data-mode="scroll"] .svc-panel .svc-copy,
+.svc[data-mode="scroll"] .svc-panel .svc-visual {
+  opacity: 0.25;
+  transform: scale(0.97);
+  transition:
+    opacity 0.6s var(--ease-out-expo),
+    transform 0.8s var(--ease-out-expo);
+}
+.svc[data-mode="scroll"] .svc-panel[data-active] .svc-copy,
+.svc[data-mode="scroll"] .svc-panel[data-active] .svc-visual {
+  opacity: 1;
+  transform: none;
+}
+@media (max-width: 767px) {
+  .svc[data-mode="scroll"] .svc-head h2 {
+    display: none;
+  }
+  .svc[data-mode="scroll"] .svc-head {
+    padding-top: 1.25rem;
+  }
+  .svc-visual {
+    max-width: 26rem;
+  }
+}
+
+/* Barres de cost: plenes a l'«abans»; quan el panell s'activa, s'escurcen fins al «després» i el tros
+   que sobra queda ratllat en magenta. */
+.svc-stripes,
+.svc-bar-ghost {
+  background: repeating-linear-gradient(-45deg, rgb(176 0 128 / 0.55) 0 4px, rgb(176 0 128 / 0.15) 4px 8px);
+}
+.svc-bar-ghost {
+  opacity: 0;
+  transition: opacity 0.6s ease calc(var(--i) * 90ms + 500ms);
+}
+.svc-bar-fill {
+  width: var(--before);
+  transition: width 1.2s var(--ease-in-out-quint) calc(var(--i) * 90ms + 250ms);
+}
+.svc-panel[data-active] .svc-bar-ghost {
+  opacity: 1;
+}
+.svc-panel[data-active] .svc-bar-fill {
+  width: var(--after);
+}
+
+/* Tiquet: els tres estats s'omplen un darrere l'altre i surt el segell de l'SLA. */
+.svc-state-check {
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity 0.3s ease,
+    transform 0.4s var(--ease-out-expo);
+  transition-delay: calc(var(--i) * 700ms + 900ms);
+}
+.svc-state-bar {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s var(--ease-in-out-quint) calc(var(--i) * 700ms + 300ms);
+}
+.svc-sla {
+  opacity: 0;
+  transform: translateY(-4px);
+  transition:
+    opacity 0.4s ease 2.6s,
+    transform 0.4s var(--ease-out-expo) 2.6s;
+}
+.svc-panel[data-active] .svc-state-check {
+  opacity: 1;
+  transform: none;
+}
+.svc-panel[data-active] .svc-state-bar {
+  transform: none;
+}
+.svc-panel[data-active] .svc-sla {
+  opacity: 1;
+  transform: none;
+}
+.svc-where-pill {
+  transition: transform 0.6s var(--ease-in-out-quint);
+}
+.svc-where-a {
+  color: #fff;
+}
+.svc-panel[data-active] .svc-where-pill {
+  animation: where 4.8s var(--ease-in-out-quint) 3s infinite;
+}
+.svc-panel[data-active] .svc-where-a {
+  animation: where-a 4.8s step-end 3s infinite;
+}
+.svc-panel[data-active] .svc-where-b {
+  animation: where-b 4.8s step-end 3s infinite;
+}
+@keyframes where {
+  0%,
+  40% {
+    transform: none;
+  }
+  50%,
+  90% {
+    transform: translateX(100%);
+  }
+}
+@keyframes where-a {
+  0%,
+  45% {
+    color: #fff;
+  }
+  46%,
+  95% {
+    color: inherit;
+  }
+}
+@keyframes where-b {
+  0%,
+  45% {
+    color: inherit;
+  }
+  46%,
+  95% {
+    color: #fff;
+  }
+}
+
+/* Flux d'automatització: els nodes entren i per les línies hi circulen polsos. */
+.svc-flow-line {
+  fill: none;
+  stroke: url(#svc-flow);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: 3 9;
+  opacity: 0.85;
+}
+.svc-panel[data-active] .svc-flow-line {
+  animation: flow-dash 1.1s linear infinite;
+}
+.svc-node {
+  opacity: 0.35;
+  transition: opacity 0.5s ease calc(var(--i) * 120ms + 200ms);
+}
+.svc-panel[data-active] .svc-node {
+  opacity: 1;
+}
+.svc-engine {
+  transform-origin: 230px 130px;
+}
+.svc-panel[data-active] .svc-engine {
+  animation: engine 2.4s ease-in-out infinite;
+}
+@keyframes flow-dash {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+@keyframes engine {
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+/* ── Gestor Global: l'esquema CIO ─────────────────────────────────────────────────────────────────
+   Sense data-mode: secció normal, esquema complet i les sis explicacions en llista.
+   Amb data-mode="scroll": 330svh, fixa, i només l'àrea activa; --done fa sortir el missatge final. */
+.hub {
+  padding-block: 6rem;
+}
+.hub-cards {
+  display: grid;
+  gap: 0.75rem;
+}
+@media (min-width: 640px) {
+  .hub:not([data-mode]) .hub-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.hub[data-mode="scroll"] {
+  height: 330svh;
+  padding-block: 0;
+}
+.hub[data-mode="scroll"] .hub-sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  padding-top: var(--header-h);
+}
+/* La que surt marxa de pressa; la que entra espera un instant: així els dos textos no es barregen. */
+.hub[data-mode="scroll"] .hub-card {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.18s ease,
+    transform 0.6s var(--ease-out-expo);
+}
+.hub[data-mode="scroll"] .hub-card[data-active] {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.45s var(--ease-out-expo) 0.15s,
+    transform 0.6s var(--ease-out-expo) 0.15s;
+}
+.hub[data-mode="scroll"] .hub-done {
+  opacity: var(--done, 0);
+  transform: translateY(calc((1 - var(--done, 0)) * 10px));
+}
+@media (max-width: 767px) {
+  .hub[data-mode="scroll"] .hub-intro {
+    display: none;
+  }
+}
+.hub-orbit {
+  transform-origin: 200px 200px;
+  animation: ring-idle 90s linear infinite;
+}
+.hub-center {
+  transform-origin: 200px 200px;
+  transform: scale(calc(1 + var(--done, 0) * 0.06));
+  transition: transform 0.4s var(--ease-out-expo);
+}
+.hub-node {
+  transition: transform 0.5s var(--ease-out-expo);
+}
+.hub-node-bg {
+  fill: var(--band-2);
+  stroke: var(--band-line);
+  stroke-width: 1.5;
+  transition:
+    fill 0.4s,
+    stroke 0.4s;
+}
+.hub-node-icon {
+  color: var(--band-ink-soft);
+  opacity: 0.55;
+  transition:
+    color 0.4s,
+    opacity 0.4s;
+}
+.hub-node-label {
+  fill: var(--band-ink-soft);
+  opacity: 0.55;
+  transition:
+    fill 0.4s,
+    opacity 0.4s;
+}
+.hub-node[data-lit] .hub-node-bg {
+  stroke: url(#hub-gradient);
+  stroke-width: 2.5;
+}
+.hub-node[data-lit] .hub-node-icon,
+.hub-node[data-lit] .hub-node-label {
+  opacity: 1;
+}
+.hub-node[data-lit] .hub-node-icon {
+  color: var(--color-sky-light);
+}
+.hub-node[data-lit] .hub-node-label {
+  fill: var(--band-ink);
+}
+.hub-node[data-active] {
+  transform: scale(1.14);
+}
+.hub-node[data-active] .hub-node-bg {
+  fill: url(#hub-gradient);
+  stroke: none;
+  filter: drop-shadow(0 8px 18px rgb(77 70 192 / 0.45));
+}
+.hub-node[data-active] .hub-node-icon {
+  color: #fff;
+  opacity: 1;
+}
+.hub-node[data-active] .hub-node-label {
+  fill: var(--band-ink);
+  opacity: 1;
+}
+
 /* Primera pantalla: pila de factures en 3D. Cada full llegeix --x, --y, --z, --rx, --ry, --rz i --mark. */
 .hero-stage {
   --s: 1;
