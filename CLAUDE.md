@@ -1,6 +1,6 @@
 # Gestgroup — web
 
-Proposta de web nova per a Gestgroup (gestgroup.es): consultoria IT de Girona que revisa les factures de
+Web nova de Gestgroup (gestgroup.es), acceptada pel client el 12-11-2026: consultoria IT de Girona que revisa les factures de
 comunicacions, llicències, programari i maquinari de les empreses i n'optimitza el cost (CIO as a
 Service, LeanIT + Kaizen), amb helpdesk 24/7 sense permanència i un departament d'innovació. Públic:
 pimes i empreses sense departament d'IT propi. Acció principal: **demanar l'anàlisi gratuïta** (formulari
@@ -70,8 +70,7 @@ Les regles de casa (`~/.claude/CLAUDE.md`) valen aquí. Això és el que és pro
 - `/[lang]` portada, `/[lang]/empresa` (Compañía), `/[lang]/casos/mdm-intune-samsung` (el cas del seu
   blog), `/[lang]/aviso-legal`, `/[lang]/privacidad` i `/[lang]/cookies`. Les legals són en castellà en
   tots dos idiomes (`lang="es"`), com a la seva web.
-- `public/images/` queda fora de la porta de la demo (`src/proxy.ts`): l'optimitzador d'imatges de Next
-  les demana sense galetes. Només hi ha d'anar el que ja és públic.
+- `src/proxy.ts` només fa la redirecció de l'arrel a l'idioma del navegador.
 
 ## Pendent
 
@@ -80,22 +79,15 @@ Les regles de casa (`~/.claude/CLAUDE.md`) valen aquí. Això és el que és pro
 - Avís legal redactat per nosaltres i taules de galetes de la web vella: vegeu `docs/fonts.md`.
 - `og:image` pròpia.
 
-## Demo per a leads (`src/demo-kit`)
+## Ja no és una demo
 
-- **El web és una demo per a un lead**: un cop desplegat, només s'hi entra amb un enllaç personal, i
-  qui no en porta veu la pàgina de bloqueig de Nertel (403). Els enllaços es fan amb
-  `pnpm demo:link "Nom del lead" --days 15`, que llegeix el secret de `.env.local` (el mateix que a
-  Vercel; no es puja mai ni s'imprimeix).
-- El codi ve del kit comú de les demos (`../nertel-demo-kit`, skill `demo-leads`). **No s'edita
-  aquí**: es canvia al kit i es torna a copiar.
-- Vercel: `DEMO_SECRET` i `DEMO_SITE=gestgroup` (la porta), i `NEXT_PUBLIC_POSTHOG_KEY` i
-  `NEXT_PUBLIC_POSTHOG_HOST` (el seguiment amb PostHog). Sense `DEMO_SECRET` el web és obert.
-- `src/proxy.ts` fa dues coses: primer la porta i després la redirecció de l'arrel a l'idioma, que
-  s'emporta les galetes de l'enllaç (`src/proxy.test.ts`). El formulari (`/api/contact`) també és
-  darrere la porta.
-- **Quan el web passi a ser el del client** es treu el kit: `src/proxy.ts` (s'hi queda només la
-  redirecció), `DemoTracker` i `DemoBadge` del layout, `src/demo-kit`, `posthog-js`, l'script
-  `demo:link` i les variables. I es revisa l'avís legal.
+- Va ser una demo per a un lead amb el kit de Nertel (enllaç personal, pàgina de bloqueig i PostHog).
+  Gestgroup l'ha acceptada (12-11-2026) i el kit s'ha tret sencer: res de `src/demo-kit`,
+  `posthog-js` ni `demo:link`. No s'hi torna a posar.
+- A Vercel queden per esborrar `DEMO_SECRET`, `NEXT_PUBLIC_POSTHOG_KEY` i `NEXT_PUBLIC_POSTHOG_HOST`
+  (ja no els llegeix res; `DEMO_SITE` ja no hi és).
+- El web no fa servir galetes pròpies (el tema es desa a `localStorage`): la política de galetes s'ha de
+  refer quan passi al domini, i l'avís legal l'ha de revisar Gestgroup.
 
 ## Git
 

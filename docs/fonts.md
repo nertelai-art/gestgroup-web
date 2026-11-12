@@ -55,8 +55,8 @@ Pàgines: portada, quienes-somos, gestcost, gestinnova, gesthelp, blog, el cas M
 - **Avís legal**: la seva web no en té. El del web nou el redacta Nertel amb les seves dades; l'han de
   revisar (i hi falten les dades del Registre Mercantil).
 - **Política de galetes**: és la de la seva web, i les taules descriuen les galetes de la web vella
-  (`rgpdModel`, `PHPSESSID`, Google Analytics), que el web nou no fa servir. Mentre sigui demo, les
-  úniques galetes són les del kit (enllaç personal i PostHog). Cal refer les taules quan es publiqui.
+  (`rgpdModel`, `PHPSESSID`, Google Analytics), que el web nou no fa servir. Des que no és demo
+  (12-11-2026) el web no posa cap galeta. Cal refer les taules quan es publiqui al seu domini.
 
 - **Nombre de clients**: la portada diu «+100», «Compañía» i «Gestor Global» diuen «+500». No el posem.
 - **Estalvi**: «33%» a la portada, «+30%» i «30%» a la resta. Fem servir 30%.
