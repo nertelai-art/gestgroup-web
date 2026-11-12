@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseContact, validateContact, type ContactInput } from "./contact";
+import { isTrapped, parseContact, validateContact, type ContactInput } from "./contact";
 
 const valid: ContactInput = {
   name: "Marta",
@@ -46,5 +46,13 @@ describe("parseContact", () => {
 
   it("omple amb text buit els camps que no són text", () => {
     expect(parseContact({ name: 3 })?.name).toBe("");
+  });
+});
+
+describe("isTrapped", () => {
+  it("només atrapa qui omple el camp parany", () => {
+    expect(isTrapped({ ...valid, website: "" })).toBe(false);
+    expect(isTrapped(valid)).toBe(false);
+    expect(isTrapped({ ...valid, website: "http://spam.test" })).toBe(true);
   });
 });

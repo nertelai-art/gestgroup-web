@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
-import { interestIds, validateContact, type ContactErrors, type ContactField, type ContactInput, type InterestId } from "@/lib/contact";
+import { interestIds, TRAP_FIELD, validateContact, type ContactErrors, type ContactField, type ContactInput, type InterestId } from "@/lib/contact";
 
 type Status = { kind: "idle" } | { kind: "sending" } | { kind: "sent"; name: string } | { kind: "error" };
 
@@ -45,7 +45,7 @@ export function ContactForm({ locale, t }: { locale: Locale; t: Dictionary }) {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify(input),
+        body: JSON.stringify({ ...input, [TRAP_FIELD]: String(new FormData(form.current ?? undefined).get(TRAP_FIELD) ?? "") }),
       });
       if (!response.ok) throw new Error(String(response.status));
       setStatus({ kind: "sent", name: input.name.trim().split(" ")[0] ?? "" });
@@ -110,6 +110,14 @@ export function ContactForm({ locale, t }: { locale: Locale; t: Dictionary }) {
           error={errors.phone ? f.errors.phone : undefined}
           onInput={() => revalidate("phone")}
         />
+      </div>
+
+      {/* Parany per a robots: fora de la vista i del teclat; una persona no l'omple mai. */}
+      <div aria-hidden className="absolute -left-[9999px] size-px overflow-hidden">
+        <label>
+          Web
+          <input type="text" name={TRAP_FIELD} tabIndex={-1} autoComplete="off" defaultValue="" />
+        </label>
       </div>
 
       <fieldset>

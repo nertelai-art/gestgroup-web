@@ -365,7 +365,6 @@ const ca: Dictionary = {
     back: "Tornar a la companyia",
   },
   legal: {
-    notice: "Avís legal",
     privacy: "Política de privacitat",
     cookies: "Política de galetes",
     note: "Informació legal de GESTGROUP IT SERVICES S.L.",

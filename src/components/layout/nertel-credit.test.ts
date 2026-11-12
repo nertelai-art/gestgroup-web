@@ -15,4 +15,8 @@ describe("enllaç de crèdit a Nertel", () => {
     expect(params.get("utm_source")).toBe("gestgroup-web.vercel.app");
     expect(params.get("utm_medium")).toBe("credit");
   });
+
+  it("quan el web passa al seu domini, l'origen canvia sol", () => {
+    expect(new URL(nertelCreditUrl("es", "https://www.gestgroup.es")).searchParams.get("utm_source")).toBe("www.gestgroup.es");
+  });
 });

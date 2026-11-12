@@ -1,7 +1,6 @@
-// Textos legals. La política de privacitat i la de galetes són CÒPIA LITERAL de la «Nota legal y política
-// de Cookies» de gestgroup.es (nota-legal.php, consultada el 23-10-2026); només s'hi ha corregit
-// «fimalidad». L'avís legal no existeix a la seva web: el redacta Nertel amb les seves dades i està
-// pendent de revisió per Gestgroup (vegeu docs/fonts.md).
+// Textos legals: els de Gestgroup, CÒPIA LITERAL de la «Nota legal y política de Cookies» de gestgroup.es
+// (nota-legal.php, consultada el 23-10-2026); només s'hi ha corregit «fimalidad». La seva web no té avís
+// legal a part i, per decisió de l'usuari (12-11-2026), aquí tampoc: només hi ha el que tenen ells.
 // Els enllaços van en format [text](url); `{lang}` es canvia per l'idioma de la pàgina.
 
 import { site } from "./site";
@@ -14,46 +13,6 @@ export type LegalBlock =
   | { kind: "table"; caption?: string; head: string[]; rows: string[][] };
 
 const { legal } = site;
-
-export const legalNotice: LegalBlock[] = [
-  {
-    kind: "p",
-    text: "En cumplimiento del artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE), se informa de los datos identificativos del titular de este sitio web.",
-  },
-  {
-    kind: "ul",
-    items: [
-      `Titular: ${legal.name}`,
-      `NIF: ${legal.nif}`,
-      `Domicilio social: ${legal.address}`,
-      `Oficina: ${site.street}, ${site.postalCode} ${site.city}`,
-      `Teléfono: ${site.phone}`,
-      `Correo electrónico: [${site.email}](mailto:${site.email})`,
-    ],
-  },
-  { kind: "h3", text: "Objeto" },
-  {
-    kind: "p",
-    text: `Este sitio web informa de los servicios de consultoría, optimización de costes, soporte e innovación IT de ${legal.name}. El acceso y el uso del sitio atribuyen la condición de usuario e implican la aceptación de este aviso legal.`,
-  },
-  { kind: "h3", text: "Propiedad intelectual e industrial" },
-  {
-    kind: "p",
-    text: `Los contenidos de este sitio web (textos, imágenes, marcas y logotipos) son propiedad de ${legal.name} o de terceros que han autorizado su uso. Queda prohibida su reproducción, distribución o transformación sin autorización expresa. Los logotipos de clientes se muestran como referencia de proyectos realizados.`,
-  },
-  { kind: "h3", text: "Responsabilidad" },
-  {
-    kind: "p",
-    text: `${legal.name} no se hace responsable de los daños derivados del uso de este sitio web ni de los contenidos de sitios de terceros enlazados desde él.`,
-  },
-  { kind: "h3", text: "Protección de datos y cookies" },
-  {
-    kind: "p",
-    text: "El tratamiento de los datos personales se rige por la [Política de privacidad](/{lang}/privacidad) y el uso de cookies, por la [Política de cookies](/{lang}/cookies).",
-  },
-  { kind: "h3", text: "Legislación aplicable" },
-  { kind: "p", text: "Este aviso legal se rige por la legislación española." },
-];
 
 const email = `[${legal.email}](mailto:${legal.email})`;
 
@@ -229,7 +188,6 @@ export const cookiePolicy: LegalBlock[] = [
 ];
 
 export const legalPages = {
-  "aviso-legal": { key: "notice", blocks: legalNotice },
   privacidad: { key: "privacy", blocks: privacyPolicy },
   cookies: { key: "cookies", blocks: cookiePolicy },
 } as const;

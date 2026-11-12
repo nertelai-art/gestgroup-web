@@ -369,7 +369,6 @@ const es = {
     back: "Volver a la compañía",
   },
   legal: {
-    notice: "Aviso legal",
     privacy: "Política de privacidad",
     cookies: "Política de cookies",
     note: "Información legal de GESTGROUP IT SERVICES S.L.",
