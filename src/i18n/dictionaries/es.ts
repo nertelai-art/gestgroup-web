@@ -243,6 +243,7 @@ const es = {
     rights: "Todos los derechos reservados.",
     linkedin: "Gestgroup en LinkedIn",
     top: "Volver arriba",
+    madeBy: "Web hecha por",
   },
   // Pàgina «Compañía»: textos de quienes-somos.php (faltes corregides) i el cas del seu blog, sencer.
   company: {

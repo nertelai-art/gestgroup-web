@@ -240,6 +240,7 @@ const ca: Dictionary = {
     rights: "Tots els drets reservats.",
     linkedin: "Gestgroup a LinkedIn",
     top: "Torna a dalt",
+    madeBy: "Web feta per",
   },
   company: {
     meta: {
