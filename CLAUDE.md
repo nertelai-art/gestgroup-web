@@ -84,8 +84,10 @@ Les regles de casa (`~/.claude/CLAUDE.md`) valen aquí. Això és el que és pro
 - Va ser una demo per a un lead amb el kit de Nertel (enllaç personal, pàgina de bloqueig i PostHog).
   Gestgroup l'ha acceptada (12-11-2026) i el kit s'ha tret sencer: res de `src/demo-kit`,
   `posthog-js` ni `demo:link`. No s'hi torna a posar.
-- A Vercel queden per esborrar `DEMO_SECRET`, `NEXT_PUBLIC_POSTHOG_KEY` i `NEXT_PUBLIC_POSTHOG_HOST`
-  (ja no els llegeix res; `DEMO_SITE` ja no hi és).
+- Públic a `gestgroup-web.vercel.app` des del 12-11-2026. Les variables de la demo i de PostHog s'han
+  esborrat de Vercel: el projecte no en té cap.
+- Sota el peu hi ha la franja «Web feta per Nertel» (`nertel-credit.ts`), com a les altres webs de
+  clients. Quan passi a `gestgroup.es`, canvia-hi el `utm_source` (i la prova).
 - El web no fa servir galetes pròpies (el tema es desa a `localStorage`): la política de galetes s'ha de
   refer quan passi al domini, i l'avís legal l'ha de revisar Gestgroup.
 
@@ -104,4 +106,8 @@ Les regles de casa (`~/.claude/CLAUDE.md`) valen aquí. Això és el que és pro
     `vercel deploy` sense `--prod`, són previsualitzacions.
   - Des de la CLI: `pnpm --config.cache-dir=C:/Users/nerte/.pnpm-dlx dlx vercel@65.2.0 …`.
     `.vercelignore` deixa fora `.env*.local` i `_source/`. Les crides `vercel api`, des de PowerShell.
+  - El 12-11-2026 les builds de producció petaven a `next/font` («Cannot read properties of null
+    (reading '1')») i les de previsualització no: la memòria cau de build de producció era vella.
+    `vercel deploy --prod --force` (sense memòria cau) ho va resoldre.
+  - Pla Pro: s'hi pot allotjar la web d'un client (ús comercial).
 - El web no s'indexa (`noindex`) mentre no sigui al domini del client (`SITE_INDEXABLE=true` ho obre).
