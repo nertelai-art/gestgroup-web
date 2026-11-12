@@ -1,8 +1,10 @@
+import Image from "next/image";
 import Link from "next/link";
 import { site } from "@/data/site";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { Logo } from "./Logo";
+import { nertelCreditUrl } from "./nertel-credit";
 
 export function Footer({ locale, t }: { locale: Locale; t: Dictionary }) {
   const legal = [
@@ -56,6 +58,23 @@ export function Footer({ locale, t }: { locale: Locale; t: Dictionary }) {
         <a href="#top" className="hover:text-snow">
           {t.footer.top} ↑
         </a>
+      </div>
+
+      {/* Qui ha fet la web. Franja pròpia sota el peu, discreta, que porta a nertel.ai. */}
+      <div className="border-t border-line bg-night-2">
+        <div className="container-x flex justify-center py-4">
+          <a
+            href={nertelCreditUrl(locale)}
+            target="_blank"
+            rel="noopener"
+            className="inline-flex items-center gap-2 text-xs text-slate transition-colors hover:text-snow"
+          >
+            <span>{t.footer.madeBy}</span>
+            {/* El filtre és un token del tema: aclareix el símbol en fosc i el deixa tal com és en clar. */}
+            <Image src="/images/logos/nertel-mark.png" alt="" width={116} height={96} className="h-6 w-auto [filter:var(--nertel-mark-filter)]" />
+            <span className="text-sm font-semibold tracking-tight text-snow">Nertel</span>
+          </a>
+        </div>
       </div>
     </footer>
   );

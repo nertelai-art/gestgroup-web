@@ -50,6 +50,8 @@
   --logo-gest: #4aa6dc;
   --logo-group: #e03aa8;
   --paper-shadow: 0 2px 4px rgb(0 0 0 / 0.18), 0 24px 50px -12px rgb(0 0 0 / 0.55);
+  /* El blau marí del símbol de Nertel és per a fons clars: sobre el peu fosc s'aclareix perquè es vegi sencer. */
+  --nertel-mark-filter: brightness(2.2) saturate(1.2);
 }
 
 /* Tema clar. Es repeteix per al sistema en clar (si l'usuari no ha triat fosc) i per a l'elecció explícita. */
@@ -70,6 +72,7 @@
     --logo-gest: #3593cb;
     --logo-group: #b00080;
     --paper-shadow: 0 1px 2px rgb(20 26 46 / 0.12), 0 22px 44px -16px rgb(20 26 46 / 0.35);
+    --nertel-mark-filter: none;
   }
 }
 :root[data-theme="light"] {
@@ -88,6 +91,7 @@
   --logo-gest: #3593cb;
   --logo-group: #b00080;
   --paper-shadow: 0 1px 2px rgb(20 26 46 / 0.12), 0 22px 44px -16px rgb(20 26 46 / 0.35);
+  --nertel-mark-filter: none;
 }
 
 @layer base {
