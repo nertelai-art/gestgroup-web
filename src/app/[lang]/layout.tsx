@@ -6,8 +6,6 @@ import { Header } from "@/components/layout/Header";
 import { JsonLd } from "@/components/layout/JsonLd";
 import { RevealObserver } from "@/components/layout/RevealObserver";
 import { themeScript } from "@/components/layout/ThemeToggle";
-import { DemoBadge } from "@/demo-kit/DemoBadge";
-import { DemoTracker } from "@/demo-kit/DemoTracker";
 import { site } from "@/data/site";
 import { defaultLocale, isLocale, locales } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -76,8 +74,6 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
         </main>
         <Footer locale={lang} t={t} />
         <RevealObserver />
-        <DemoTracker site="gestgroup" />
-        <DemoBadge site="gestgroup" locale={lang} />
         <JsonLd locale={lang} t={t} />
       </body>
     </html>
