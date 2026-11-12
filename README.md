@@ -14,4 +14,4 @@ Context, contingut i decisions: [`CLAUDE.md`](CLAUDE.md), [`docs/fonts.md`](docs
 [`docs/direccio-visual.md`](docs/direccio-visual.md).
 
 Va començar com a demo privada per a Gestgroup; l'han acceptada (12-11-2026) i el kit de demo ja no hi
-és. **Cal revisar l'avís legal i refer les taules de la política de galetes** abans que sigui al seu domini.
+és. El pas al seu domini: [`docs/llancament.md`](docs/llancament.md).

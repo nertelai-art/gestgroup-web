@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { cookiePolicy, legalNotice, parseLinks, privacyPolicy } from "./legal";
+import { cookiePolicy, parseLinks, privacyPolicy } from "./legal";
 import { site } from "./site";
 
 const allText = (blocks: typeof privacyPolicy) =>
@@ -7,13 +7,11 @@ const allText = (blocks: typeof privacyPolicy) =>
 
 describe("textos legals", () => {
   it("porten les dades exactes del titular de la seva Nota legal", () => {
-    for (const blocks of [legalNotice, privacyPolicy]) {
-      const text = allText(blocks);
-      expect(text).toContain("GESTGROUP IT SERVICES S.L.");
-      expect(text).toContain("B56762339");
-      expect(text).toContain("C/ Manuel Cazurro Ruiz, 3 - 3º 2ª | 17003 Girona");
-    }
-    expect(allText(privacyPolicy)).toContain(site.legal.email);
+    const text = allText(privacyPolicy);
+    expect(text).toContain("GESTGROUP IT SERVICES S.L.");
+    expect(text).toContain("B56762339");
+    expect(text).toContain("C/ Manuel Cazurro Ruiz, 3 - 3º 2ª | 17003 Girona");
+    expect(text).toContain(site.legal.email);
   });
 
   it("la política de galetes conserva les quatre taules de galetes i els enllaços dels navegadors", () => {

@@ -68,7 +68,7 @@ Les regles de casa (`~/.claude/CLAUDE.md`) valen aquí. Això és el que és pro
 ## Pàgines
 
 - `/[lang]` portada, `/[lang]/empresa` (Compañía), `/[lang]/casos/mdm-intune-samsung` (el cas del seu
-  blog), `/[lang]/aviso-legal`, `/[lang]/privacidad` i `/[lang]/cookies`. Les legals són en castellà en
+  blog), `/[lang]/privacidad` i `/[lang]/cookies` (`/aviso-legal` redirigeix a la privacitat). Les legals són en castellà en
   tots dos idiomes (`lang="es"`), com a la seva web.
 - `src/proxy.ts` només fa la redirecció de l'arrel a l'idioma del navegador.
 
@@ -77,10 +77,13 @@ Les regles de casa (`~/.claude/CLAUDE.md`) valen aquí. Això és el que és pro
 - **Pas a gestgroup.es** (opció A: es queda a Vercel i ells canvien els DNS): com ho tenen ara, què
   demanar-los i la llista del dia del canvi, a `docs/llancament.md`. Les redireccions de les adreces
   velles ja hi són (`src/data/redirects.ts`).
-- **El formulari** s'envia per SMTP amb una bústia de gestgroup.es (`src/lib/contact-mail.ts`, variables
-  `CONTACT_*` de `.env.example`), com feia la seva web vella; Gestgroup no vol Resend. Fins que no en
-  tinguem les dades, respon `delivered: false`. Porta un camp parany contra robots.
-- Avís legal redactat per nosaltres i taules de galetes de la web vella: vegeu `docs/fonts.md`.
+- **El formulari** s'envia amb Resend (`src/lib/contact-mail.ts`; el proveïdor només a
+  `src/lib/email/resend.ts`), des d'un domini verificat de Nertel (`nertel.ai`): a Gestgroup només li
+  cal donar l'adreça on el vol rebre (`MAIL_TO`). Fins que no hi hagi `RESEND_API_KEY`, `MAIL_FROM` i
+  `MAIL_TO`, respon `delivered: false`. Porta un camp parany contra robots.
+- Textos legals: només els seus, literals (privacitat i galetes de la seva «Nota legal»). No hi ha avís
+  legal, perquè ells no en tenen (decisió de l'usuari, 12-11-2026). La política de galetes parla de
+  Google Analytics perquè la web vella el tenia (un `UA-` que ja no recull res).
 - `og:image` pròpia.
 
 ## Ja no és una demo
@@ -92,8 +95,7 @@ Les regles de casa (`~/.claude/CLAUDE.md`) valen aquí. Això és el que és pro
   esborrat de Vercel: el projecte no en té cap.
 - Sota el peu hi ha la franja «Web feta per Nertel» (`nertel-credit.ts`), com a les altres webs de
   clients. El `utm_source` surt de `NEXT_PUBLIC_SITE_URL`: canvia sol quan passi a `gestgroup.es`.
-- El web no fa servir galetes pròpies (el tema es desa a `localStorage`): la política de galetes s'ha de
-  refer quan passi al domini, i l'avís legal l'ha de revisar Gestgroup.
+- El web no fa servir galetes (el tema es desa a `localStorage`) ni analítica.
 
 ## Git
 

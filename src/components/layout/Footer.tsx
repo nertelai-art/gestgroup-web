@@ -8,7 +8,6 @@ import { nertelCreditUrl } from "./nertel-credit";
 
 export function Footer({ locale, t }: { locale: Locale; t: Dictionary }) {
   const legal = [
-    { href: `/${locale}/aviso-legal`, label: t.legal.notice },
     { href: `/${locale}/privacidad`, label: t.legal.privacy },
     { href: `/${locale}/cookies`, label: t.legal.cookies },
   ];

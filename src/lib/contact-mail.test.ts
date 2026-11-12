@@ -12,30 +12,25 @@ const input: ContactInput = {
   privacy: true,
 };
 
-const env = {
-  CONTACT_SMTP_HOST: "smtp.exemple.test",
-  CONTACT_SMTP_USER: "web@gestgroup.es",
-  CONTACT_SMTP_PASS: "x",
-  CONTACT_MAIL_TO: "gestgroup@gestgroup.es",
-};
+const env = { RESEND_API_KEY: "re_prova", MAIL_FROM: "Web Gestgroup <web@nertel.ai>", MAIL_TO: "gestgroup@gestgroup.es" };
 
 describe("mailConfig", () => {
-  it("sense servidor, usuari, contrasenya i destinatari, no hi ha enviament", () => {
+  it("sense clau, remitent i destinatari, no hi ha enviament", () => {
     expect(mailConfig({})).toBeNull();
-    expect(mailConfig({ ...env, CONTACT_MAIL_TO: "" })).toBeNull();
+    expect(mailConfig({ ...env, MAIL_TO: "" })).toBeNull();
+    expect(mailConfig({ ...env, RESEND_API_KEY: "" })).toBeNull();
   });
 
-  it("per defecte, port 587 i el remitent és l'usuari", () => {
-    expect(mailConfig(env)).toMatchObject({ port: 587, from: "web@gestgroup.es", to: "gestgroup@gestgroup.es" });
-    expect(mailConfig({ ...env, CONTACT_SMTP_PORT: "465", CONTACT_MAIL_FROM: "noreply@gestgroup.es" })).toMatchObject({ port: 465, from: "noreply@gestgroup.es" });
+  it("amb les tres, envia", () => {
+    expect(mailConfig(env)).toEqual({ apiKey: "re_prova", from: "Web Gestgroup <web@nertel.ai>", to: "gestgroup@gestgroup.es" });
   });
 });
 
 describe("contactMail", () => {
-  const mail = contactMail(input, { from: "web@gestgroup.es", to: "gestgroup@gestgroup.es" });
+  const mail = contactMail(input, { from: "Web Gestgroup <web@nertel.ai>", to: "gestgroup@gestgroup.es" });
 
-  it("surt de la bústia de Gestgroup i, en respondre, contesta a qui ha escrit", () => {
-    expect(mail.from).toBe("Web Gestgroup <web@gestgroup.es>");
+  it("arriba a la bústia de Gestgroup i, en respondre, contesta a qui ha escrit", () => {
+    expect(mail.from).toBe("Web Gestgroup <web@nertel.ai>");
     expect(mail.to).toBe("gestgroup@gestgroup.es");
     expect(mail.replyTo).toBe("Marta Puig <marta@exemple.cat>");
   });
@@ -55,8 +50,8 @@ describe("contactMail", () => {
 describe("sendContactMail", () => {
   it("envia el correu amb la configuració", async () => {
     const config = mailConfig(env) as MailConfig;
-    const send = vi.fn().mockResolvedValue(undefined);
-    await sendContactMail(input, config, send);
-    expect(send).toHaveBeenCalledWith(expect.objectContaining({ subject: "Solicitud de análisis gratuito: Exemple, S.L." }), config);
+    const deliver = vi.fn().mockResolvedValue(undefined);
+    await sendContactMail(input, config, deliver);
+    expect(deliver).toHaveBeenCalledWith(expect.objectContaining({ subject: "Solicitud de análisis gratuito: Exemple, S.L." }), config);
   });
 });

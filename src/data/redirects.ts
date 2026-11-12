@@ -10,7 +10,11 @@ export const legacyRedirects = [
   { source: "/gesthelp.php", destination: "/es#soporte" },
   { source: "/clientes.php", destination: "/es#clientes" },
   { source: "/contactar.php", destination: "/es#contacto" },
-  { source: "/nota-legal.php", destination: "/es/aviso-legal" },
+  // La seva «Nota legal» és la política de privacitat i la de galetes. L'avís legal que vam tenir publicat
+  // uns dies (fins al 12-11-2026) ja no hi és.
+  { source: "/nota-legal.php", destination: "/es/privacidad" },
+  { source: "/es/aviso-legal", destination: "/es/privacidad" },
+  { source: "/ca/aviso-legal", destination: "/ca/privacidad" },
   // El blog només té un article, el cas dels 800 MDM, que aquí és una pàgina pròpia.
   { source: "/blog.php", destination: "/es/casos/mdm-intune-samsung" },
   { source: "/blog-details.html", destination: "/es/casos/mdm-intune-samsung" },

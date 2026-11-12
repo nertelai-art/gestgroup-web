@@ -1,18 +1,14 @@
-import { createTransport } from "nodemailer";
 import { getDictionary } from "@/i18n/dictionaries";
 import type { ContactInput } from "./contact";
+import { sendWithResend } from "./email/resend";
 
 /**
- * Enviament del formulari per correu, per SMTP: amb la bústia que doni Gestgroup (la del seu
- * allotjament o la de Microsoft 365), com feia la seva web vella. Sense configuració no s'envia res i
- * la resposta ho diu (`delivered: false`).
+ * Enviament del formulari per correu a Gestgroup. Sense configuració no s'envia res i la resposta ho
+ * diu (`delivered: false`).
  */
 export type MailConfig = {
-  host: string;
-  port: number;
-  user: string;
-  pass: string;
-  /** Remitent: ha de ser una adreça de gestgroup.es que el servidor SMTP deixi fer servir. */
+  apiKey: string;
+  /** Remitent: ha de ser d'un domini verificat al proveïdor de correu. */
   from: string;
   /** On arriben les sol·licituds. Pot ser una llista separada per comes. */
   to: string;
@@ -23,9 +19,9 @@ export type Mail = { from: string; to: string; replyTo: string; subject: string;
 type Env = Readonly<Record<string, string | undefined>>;
 
 export function mailConfig(env: Env = process.env): MailConfig | null {
-  const { CONTACT_SMTP_HOST: host, CONTACT_SMTP_USER: user, CONTACT_SMTP_PASS: pass, CONTACT_MAIL_TO: to } = env;
-  if (!host || !user || !pass || !to) return null;
-  return { host, port: Number(env.CONTACT_SMTP_PORT) || 587, user, pass, from: env.CONTACT_MAIL_FROM || user, to };
+  const { RESEND_API_KEY: apiKey, MAIL_FROM: from, MAIL_TO: to } = env;
+  if (!apiKey || !from || !to) return null;
+  return { apiKey, from, to };
 }
 
 /** El correu que rep Gestgroup: en castellà, amb el que ha escrit qui demana l'anàlisi, i «Responder» li contesta a ell. */
@@ -44,7 +40,7 @@ export function contactMail(input: ContactInput, config: Pick<MailConfig, "from"
     "Enviado desde el formulario de análisis gratuito de la web.",
   ];
   return {
-    from: `Web Gestgroup <${config.from}>`,
+    from: config.from,
     to: config.to,
     replyTo: `${input.name.trim().replace(/[<>"]/g, "")} <${input.email.trim()}>`,
     subject: `Solicitud de análisis gratuito: ${input.company.trim()}`,
@@ -54,9 +50,8 @@ export function contactMail(input: ContactInput, config: Pick<MailConfig, "from"
 
 export type Send = (mail: Mail, config: MailConfig) => Promise<unknown>;
 
-const smtpSend: Send = (mail, config) =>
-  createTransport({ host: config.host, port: config.port, secure: config.port === 465, auth: { user: config.user, pass: config.pass } }).sendMail(mail);
+const send: Send = (mail, config) => sendWithResend(mail, config.apiKey);
 
-export async function sendContactMail(input: ContactInput, config: MailConfig, send: Send = smtpSend) {
-  await send(contactMail(input, config), config);
+export async function sendContactMail(input: ContactInput, config: MailConfig, deliver: Send = send) {
+  await deliver(contactMail(input, config), config);
 }

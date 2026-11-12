@@ -22,8 +22,9 @@ describe("redireccions de la web vella", () => {
 
   it("porten a pàgines i seccions que existeixen", () => {
     for (const { destination } of legacyRedirects) {
-      const [path, anchor] = destination.split("#");
-      expect(pages, destination).toContain(path);
+      const [path = "", anchor] = destination.split("#");
+      // Les rutes són les mateixes en tots dos idiomes.
+      expect(pages, destination).toContain(path.replace(/^\/ca(?=\/|$)/, "/es"));
       if (anchor) expect(sectionIds, destination).toContain(anchor);
     }
   });

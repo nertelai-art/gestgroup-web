@@ -52,11 +52,10 @@ Pàgines: portada, quienes-somos, gestcost, gestinnova, gesthelp, blog, el cas M
 
 ## Pendent de confirmar amb Gestgroup
 
-- **Avís legal**: la seva web no en té. El del web nou el redacta Nertel amb les seves dades; l'han de
-  revisar (i hi falten les dades del Registre Mercantil).
-- **Política de galetes**: és la de la seva web, i les taules descriuen les galetes de la web vella
-  (`rgpdModel`, `PHPSESSID`, Google Analytics), que el web nou no fa servir. Des que no és demo
-  (12-11-2026) el web no posa cap galeta. Cal refer les taules quan es publiqui al seu domini.
+- **Textos legals**: el web nou porta només els seus, literals (12-11-2026, per decisió de l'usuari).
+  No tenen avís legal a part, i aquí tampoc. La política de galetes descriu les de la web vella
+  (`rgpdModel`, `PHPSESSID`, Google Analytics amb un `UA-` que Google va apagar el 2023); el web nou no
+  en posa cap. Si ho volen ajustar, ho han de dir ells.
 
 - **Nombre de clients**: la portada diu «+100», «Compañía» i «Gestor Global» diuen «+500». No el posem.
 - **Estalvi**: «33%» a la portada, «+30%» i «30%» a la resta. Fem servir 30%.
@@ -65,4 +64,4 @@ Pàgines: portada, quienes-somos, gestcost, gestinnova, gesthelp, blog, el cas M
 - **Facturació** («1M€ l'últim any» / «+1M Facturació 2021»): no la posem.
 - Logotip en vectorial (el nostre és redibuixat, provisional), fotos reals de l'equip i de l'oficina,
   i si tenen certificacions de fabricants (Microsoft, etc.).
-- Raó social i CIF per a l'avís legal; on han d'arribar les sol·licituds del formulari.
+- A quina adreça volen rebre les sol·licituds del formulari (vegeu `docs/llancament.md`).
