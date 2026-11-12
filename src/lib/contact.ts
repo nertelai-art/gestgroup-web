@@ -30,6 +30,13 @@ export function validateContact(input: ContactInput): ContactErrors {
   return errors;
 }
 
+/** Nom del camp parany: amagat a les persones, els robots l'omplen. La web vella en tenia un («atrapalo»). */
+export const TRAP_FIELD = "website";
+
+/** Si el camp parany porta text, és un robot: es respon com si s'hagués enviat, però no s'envia. */
+export const isTrapped = (body: unknown) =>
+  !!body && typeof body === "object" && typeof (body as Record<string, unknown>)[TRAP_FIELD] === "string" && ((body as Record<string, string>)[TRAP_FIELD] ?? "").trim() !== "";
+
 /** Converteix un cos desconegut (JSON del navegador) en dades netes, o `null` si no té la forma esperada. */
 export function parseContact(body: unknown): ContactInput | null {
   if (!body || typeof body !== "object") return null;

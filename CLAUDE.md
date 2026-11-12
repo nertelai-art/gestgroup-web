@@ -74,8 +74,12 @@ Les regles de casa (`~/.claude/CLAUDE.md`) valen aquí. Això és el que és pro
 
 ## Pendent
 
-- **El formulari no s'envia enlloc**: `/api/contact` valida i respon `delivered: false`. Cal decidir
-  amb Gestgroup on han d'arribar les sol·licituds (correu o CRM) abans de publicar-lo de debò.
+- **Pas a gestgroup.es** (opció A: es queda a Vercel i ells canvien els DNS): com ho tenen ara, què
+  demanar-los i la llista del dia del canvi, a `docs/llancament.md`. Les redireccions de les adreces
+  velles ja hi són (`src/data/redirects.ts`).
+- **El formulari** s'envia per SMTP amb una bústia de gestgroup.es (`src/lib/contact-mail.ts`, variables
+  `CONTACT_*` de `.env.example`), com feia la seva web vella; Gestgroup no vol Resend. Fins que no en
+  tinguem les dades, respon `delivered: false`. Porta un camp parany contra robots.
 - Avís legal redactat per nosaltres i taules de galetes de la web vella: vegeu `docs/fonts.md`.
 - `og:image` pròpia.
 
@@ -87,7 +91,7 @@ Les regles de casa (`~/.claude/CLAUDE.md`) valen aquí. Això és el que és pro
 - Públic a `gestgroup-web.vercel.app` des del 12-11-2026. Les variables de la demo i de PostHog s'han
   esborrat de Vercel: el projecte no en té cap.
 - Sota el peu hi ha la franja «Web feta per Nertel» (`nertel-credit.ts`), com a les altres webs de
-  clients. Quan passi a `gestgroup.es`, canvia-hi el `utm_source` (i la prova).
+  clients. El `utm_source` surt de `NEXT_PUBLIC_SITE_URL`: canvia sol quan passi a `gestgroup.es`.
 - El web no fa servir galetes pròpies (el tema es desa a `localStorage`): la política de galetes s'ha de
   refer quan passi al domini, i l'avís legal l'ha de revisar Gestgroup.
 
